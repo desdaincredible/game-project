@@ -2,19 +2,25 @@
     // how big/number of squares? 
     // size of squares?
     // starting with 20 x 20, 30px x 30px squares
+const makeGrid = () => {
     $('body').append('<div class="container"><div>')
     for (let x = 0; x < 20; x++){
         for (let y = 0; y < 20; y++){
         $('.container').append(`<div class="grid-squares" x="${[x]}" y="${[y]}"></div>`)
         }
     }
+}
+makeGrid();
 
 // Create home city to defend. Defense set at 500.
     // how many squares does it take up? can you move it? 4 x 4 at 0,3
+const makeHomeCity = () => {
     $('[x ="0"][y="3"]').append('<div class="home-city"></div>')
     $('[x ="0"][y="4"]').append('<div class="home-city"></div>')
     $('[x ="1"][y="3"]').append('<div class="home-city"></div>')
     $('[x ="1"][y="4"]').append('<div class="home-city"></div>')
+}
+makeHomeCity();
 
 const homeCity = {
     defenses: 500,
@@ -46,6 +52,7 @@ class Knights {
     }
 }
 
+// only necessary if I end up adding new knights later
 class KnightFactory {
     constructor(){
         this.knights = [];
@@ -59,54 +66,85 @@ class KnightFactory {
 } 
 
 let knight1 = new Knights(100, 1, 15);
-$('[x ="0"][y="2"]').append('<div class="home-knight" id="1"></div>')
-$('[x ="1"][y="2"]').append('<div class="home-knight" id="1"></div>')
 
+const addKnightsToUI = () => {
+$('[x ="0"][y="2"]').append('<div class="home-knight" id="hk1"></div>')
+$('[x ="1"][y="2"]').append('<div class="home-knight" id="hk2"></div>')
+}
+addKnightsToUI();
 
 
 // movement, figure out how to move them individually.
 // make it a function and call it in the class somehow?
 
-$(document).keydown(function(e){
-    if (e.keyCode === 37){ 
-        direction = 'left';
-        $('.home-knight').finish().animate({
-            left: '-=32'
-        });
-        console.log("left pressed");
-    } else if (e.keyCode === 38){
-        direction = 'up';
-        $('.home-knight').finish().animate({
-            top: '-=36'
-        });
-        console.log("up pressed");
-    } else if (e.keyCode === 39){
-        direction = 'right';
-        $('.home-knight').finish().animate({
-            left: '+=32'
-        });
-        console.log("right pressed");
-    } else if (e.keyCode === 40){
-        direction = 'down';
-        $('.home-knight').finish().animate({
-            top: '+=36'
-        });                
-        console.log("down pressed");
-    }
-});
+// currentKnight = some kind of hybrid jquery js thing
+// the div selected, unique id attribute
+// maybe create an array with knight objects, referencing their id key (make it same as div)
+// loop through and if knight.id == attr id, do the thing
+let currentKnight = ''; 
+
+const move = () => {
+$('.home-knights').on('click', function(e){
+    $(document).keydown(function(e){
+        if (e.keyCode === 37){ 
+            direction = 'left';
+            $('.home-knights').finish().animate({
+                left: '-=32'
+            });
+        } else if (e.keyCode === 38){
+            direction = 'up';
+            $('.home-knights').finish().animate({
+                top: '-=36'
+            });
+        } else if (e.keyCode === 39){
+            direction = 'right';
+            $('.home-knights').finish().animate({
+                left: '+=32'
+            });
+        } else if (e.keyCode === 40){
+            direction = 'down';
+            $('.home-knights').finish().animate({
+                top: '+=36'
+            });                
+        }
+    });
+})
+}
+move();
 
 
+// tried .focus, .off, button to remove all event listeners with .off
 
-
-// $('.home-knight').keydown(function(){
-//     move();
-// })
-
-
+// make global variable currentPlayer and change it with on click. 
+// Move function will only work on current player.
 
 
 // Create enemy city with enemies that defend their city.
-    // how many to defend city? how to get them to move? 
+const makeEnemyCity = () => {
+    $('[x ="19"][y="14"]').append('<div class="enemy-city"></div>')
+    $('[x ="19"][y="15"]').append('<div class="enemy-city"></div>')
+    $('[x ="18"][y="14"]').append('<div class="enemy-city"></div>')
+    $('[x ="18"][y="15"]').append('<div class="enemy-city"></div>')
+}
+makeEnemyCity();
+
+const enemyCity = {
+    defenses: 500,
+    location: ["19,14", "19,15", "18,14", "18,15"], // not sure this is the way I want to save this
+}
+
+    // how many to defend city? 8
+const addEnemiesToUI = () => {
+    $('[x = "19"][y = "13"]').append('<div class="enemy-knights" id="ek1"></div>')
+    $('[x = "19"][y = "16"]').append('<div class="enemy-knights" id="ek2"></div>')
+    $('[x = "18"][y = "13"]').append('<div class="enemy-knights" id="ek3"></div>')
+    $('[x = "18"][y = "16"]').append('<div class="enemy-knights" id="ek4"></div>')
+    $('[x = "17"][y = "13"]').append('<div class="enemy-knights" id="ek5"></div>')
+    $('[x = "17"][y = "14"]').append('<div class="enemy-knights" id="ek6"></div>')
+    $('[x = "17"][y = "15"]').append('<div class="enemy-knights" id="ek7"></div>')
+    $('[x = "17"][y = "16"]').append('<div class="enemy-knights" id="ek8"></div>')
+}
+addEnemiesToUI();
     // how to deterimine they are enemies?
     // how to spawn next to home city?
     // how to attack? 

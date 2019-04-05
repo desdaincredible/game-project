@@ -149,7 +149,42 @@ $(document).keydown(function(e){
     }
 });
 
+let currentKnight = ''; 
 
+
+// failed attempt to make the guys move
+const move = () => {
+$(document).on('click', function(e){
+//     $('e.target.div')
+// currentKnight = e.target;
+//     if (e.target === currentKnight){
+    $('.container').keydown(function(e){
+        if (e.keyCode === 37){ 
+            direction = 'left';
+            $('.home-knights').finish().animate({
+                left: '-=32'
+            });
+        } else if (e.keyCode === 38){
+            direction = 'up';
+            $('.home-knights').finish().animate({
+                top: '-=36'
+            });
+        } else if (e.keyCode === 39){
+            direction = 'right';
+            $('.home-knights').finish().animate({
+                left: '+=32'
+            });
+        } else if (e.keyCode === 40){
+            direction = 'down';
+            $('.home-knights').finish().animate({
+                top: '+=36'
+            });                
+        }
+    });
+    // }
+})
+}
+move();
 
 
 // $('.home-knight').keydown(function(){
@@ -192,4 +227,7 @@ $(document).keydown(function(e){
     // add attack accuracy/damage inflicted to player's people?
 
 // Player needs to protect ally city + home city.
+
+
+
 
