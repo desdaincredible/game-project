@@ -192,6 +192,50 @@ move();
 // })
 
 
+// how to get a turn based system
+$('.home-knight').on('click', function(e){
+    currentKnight = e.target;       
+});
+
+
+const move = () => {
+    $(document).keydown(function(e){
+        if (currentKnight){
+            if (e.keyCode === 37){ 
+                direction = 'left';
+                $('.home-knight').finish().animate({
+                    left: '-=32'
+                });
+            } else if (e.keyCode === 38){
+                direction = 'up';
+                $('.home-knight').finish().animate({
+                    top: '-=36'
+                });
+            } else if (e.keyCode === 39){
+                direction = 'right';
+                $('.home-knight').finish().animate({
+                    left: '+=32'
+                });
+            } else if (e.keyCode === 40){
+                direction = 'down';
+                $('.home-knight').finish().animate({
+                    top: '+=36'
+                });                
+            }
+        }
+    });
+}
+move();
+
+$(document).keyup(function(e){
+    if(currentKnight){
+        currentKnight = false;
+        $('.home-knight').stop(true, true);
+    }
+})
+
+
+
 
 
 // Create enemy city with enemies that defend their city.

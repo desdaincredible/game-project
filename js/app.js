@@ -15,17 +15,22 @@ makeGrid();
 // Create home city to defend. Defense set at 500.
     // how many squares does it take up? can you move it? 4 x 4 at 0,3
 const makeHomeCity = () => {
-    $('[x ="0"][y="3"]').append('<div class="home-city"></div>')
-    $('[x ="0"][y="4"]').append('<div class="home-city"></div>')
-    $('[x ="1"][y="3"]').append('<div class="home-city"></div>')
-    $('[x ="1"][y="4"]').append('<div class="home-city"></div>')
+    $('[x ="0"][y="3"]').append('<div class="home-city"></div>');
+    // $('[x ="0"][y="4"]').append('<div class="home-city"></div>')
+    // $('[x ="1"][y="3"]').append('<div class="home-city"></div>')
+    // $('[x ="1"][y="4"]').append('<div class="home-city"></div>')
 }
 makeHomeCity();
 
-const homeCity = {
+let homeCity = {
     defenses: 500,
-    location: ["0,3", "0,4", "1,3", "1,4"], // not sure this is the way I want to save this
 }
+
+homeCityArray = [];
+homeCityArray.push(homeCity);
+
+// attaching object to div (stats show when added to array)
+homeCity = $('<div class="home-city" id="hc"></div>')[ 0 ];
 
 
 // Create fighters and make them able to move around the board.
@@ -39,7 +44,7 @@ const homeCity = {
 
 
 class Knights {
-    constructor(hp, accuracy, damage, id){
+    constructor(hp, damage, id){
         this.hp = hp;
         this.damage = damage;
         this.id = id;
@@ -47,21 +52,23 @@ class Knights {
         // this.x = 0;
         // this.y = 0;
     }
+    move(){
+        knightMove();
+    }
 
     attack(){
 
     }
 }
 
-
-
-// only necessary if I end up adding new knights later
+// add 'attaching to div' and use to keep track of all knights
 class KnightFactory {
     constructor(){
         this.knights = [];
     }
     generateKnight(){
         const newKnight = new Knights(this.knights.length);
+        this.knights.push(newKnight);
     }
     findKnight(index){
         return this.knights[index];
@@ -70,8 +77,8 @@ class KnightFactory {
 
 
 const addKnightsToUI = () => {
-$('[x ="0"][y="2"]').append('<div class="home-knight" id="0"></div>')
-$('[x ="1"][y="2"]').append('<div class="home-knight" id="1"></div>')
+$('[x ="0"][y="2"]').append('<div class="home-knight" id="hk1"></div>')
+$('[x ="1"][y="2"]').append('<div class="home-knight" id="hk2"></div>')
 }
 addKnightsToUI();
 
@@ -79,14 +86,16 @@ addKnightsToUI();
 const knightArray = [];
 
 // instantiating the first knight
-let knight1 = new Knights(100, 15, 1);
+let knight1 = new Knights(100, 15, 'hk1');
 knightArray.push(knight1);
 
-// attaching object to div, MISSING STATS
+let knight2 = new Knights(100, 15, 'hk2');
+knightArray.push(knight2);
+
+// attaching object to div (stats show when added to array)
+// find a way to make this work when generating new knights
 knight1 = $('<div class="home-knight" id="hk1"></div>')[ 0 ];
-
-
-// knight1.hp = 5;
+knight2 = $('<div class="home-knight" id="hk2"></div>')[ 0 ];
 
 // movement, figure out how to move them individually.
 // make it a function and call it in the class somehow?
@@ -97,24 +106,10 @@ knight1 = $('<div class="home-knight" id="hk1"></div>')[ 0 ];
 // loop through and if knight.id == attr id, do the thing
 let currentKnight = ''; 
 
-// const selectKnight = () => {
-//     knightArray.forEach(function() {
-//         $('.home-knight').on('click', function(e){
-//             // if div id == [i]
-
-//         })
-//     })
-
-// getting there...can move 1 move when clicked. Both still move together.
-
+const knightMove = () => {
 $('.home-knight').on('click', function(e){
-    currentKnight = e.target;         
-});
-
-
-const move = () => {
-    $(document).keydown(function(e){
-        if (currentKnight){
+    //     currentKnight = e.target;
+        $(document).keydown(function(e){
             if (e.keyCode === 37){ 
                 direction = 'left';
                 $('.home-knight').finish().animate({
@@ -136,18 +131,68 @@ const move = () => {
                     top: '+=36'
                 });                
             }
-        }
+    
+        });
     });
 }
-move();
+
+// const selectKnight = () => {
+//     knightArray.forEach(function() {
+//         $('.home-knight').on('click', function(e){
+//             // if div id == [i]
+
+//         })
+//     })
+
+// getting there...can move 1 move when clicked. Both still move together.
+// maybe use div id, add a matching value to pull with .val that is unique?
+
+$('.home-knight').on('click', function(e){
+    currentKnight = e.target;
+    if (currentKnight == $('#hk1')){
+        knight1.move()
+    } else if (currentKnight == $('#hk2')){
+        knight2.move();
+    }        
+});
 
 
-$(document).keyup(function(e){
-    if(currentKnight){
-        currentKnight = false;
-        $('.home-knight').stop(true, true);
-    }
-})
+// const move = () => {
+//     $(document).keydown(function(e){
+//         if (currentKnight){
+//             if (e.keyCode === 37){ 
+//                 direction = 'left';
+//                 $('.home-knight').finish().animate({
+//                     left: '-=32'
+//                 });
+//             } else if (e.keyCode === 38){
+//                 direction = 'up';
+//                 $('.home-knight').finish().animate({
+//                     top: '-=36'
+//                 });
+//             } else if (e.keyCode === 39){
+//                 direction = 'right';
+//                 $('.home-knight').finish().animate({
+//                     left: '+=32'
+//                 });
+//             } else if (e.keyCode === 40){
+//                 direction = 'down';
+//                 $('.home-knight').finish().animate({
+//                     top: '+=36'
+//                 });                
+//             }
+//         }
+//     });
+// }
+// move();
+
+
+// $(document).keyup(function(e){
+//     if(currentKnight){
+//         currentKnight = false;
+//         $('.home-knight').stop(true, true);
+//     }
+// })
 
 // tried .focus, .off, button to remove all event listeners with .off
 
@@ -169,6 +214,52 @@ const enemyCity = {
     location: ["19,14", "19,15", "18,14", "18,15"], // not sure this is the way I want to save this
 }
 
+class Enemies {
+    constructor(id){
+        this.hp = 100;
+        this.damage = 15;
+        this.id = id;
+    }
+
+    attackCity(){
+        homeCity.defenses - Enemies.damage;
+    }
+    attackKnight(){
+        knights.hp - Enemies.damage;
+    }
+}
+
+class EnemyFactory {
+    constructor(){
+        this.enemies = [];
+    }
+    generateEnemy(){
+        let newEnemy = new Enemies(this.enemies.length);
+        this.enemies.push(newEnemy);
+        newEnemy = $(`<div class="enemy" id="e + this.enemies.length"></div>`)[ 0 ];
+    }
+    findEnemy(index){
+        return this.enemies[index];
+    }
+} 
+const enemyFactory = new EnemyFactory(this.hp, this.damage, this.id);
+enemyFactory.generateEnemy();
+enemyFactory.generateEnemy();
+enemyFactory.generateEnemy();
+
+// instantiating the enemies
+// let enemy1 = new Enemies(100, 15, 'e1');
+// enemyArray.push(enemy1);
+
+// let enemy2 = new Enemies(100, 15, 'e2');
+// enemyArray.push(enemy2);
+
+// attaching object to div (stats show when added to array)
+// find a way to make this work when generating new enemies
+// enemy1 = $('<div class="enemy-knight" id="e1"></div>')[ 0 ];
+// enemy2 = $('<div class="enemy-knight" id="e2"></div>')[ 0 ];
+
+
     // how many to defend city? 8
 const addEnemiesToUI = () => {
     $('[x = "19"][y = "13"]').append('<div class="enemy-knight" id="e1"></div>')
@@ -187,29 +278,38 @@ addEnemiesToUI();
     // how to spawn next to home city?
     // how to randomize their spawns
 
+// how to make them not spawn on a location that's already occupied? empty first.
 const spawnEnemy = () => {
     if (Math.random() < 0.3){
+        $('[x = "0"][y = "5"]').empty();
         $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
     }
     if (Math.random() < 0.3){
+        $('[x = "1"][y = "5"]').empty();
         $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
     } 
     if (Math.random() < 0.3) {
+        $('[x = "2"][y = "5"]').empty();
         $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
     } 
     if (Math.random() < 0.3) {
+        $('[x = "2"][y = "4"]').empty();
         $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e"></div>');
     }
     if (Math.random() < 0.3){
+        $('[x = "0"][y = "5"]').empty();
         $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
     }
     if (Math.random() < 0.3){
+        $('[x = "1"][y = "5"]').empty();
         $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
     } 
     if (Math.random() < 0.3) {
+        $('[x = "2"][y = "5"]').empty();
         $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
     } 
     if (Math.random() < 0.3) {
+        $('[x = "2"][y = "4"]').empty();
         $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e"></div>');
     }
 }
@@ -217,6 +317,7 @@ spawnEnemy();
     
     // how to attack? 
     // randomize their attacks (accuracy and damage inflicted)
+
     // give them hp stat, they disappear when it reaches 0
 
 // Set up timer.
