@@ -53,7 +53,7 @@ class Knights {
         // this.y = 0;
     }
     move(){
-        knightMove();
+
     }
 
     attack(){
@@ -106,35 +106,51 @@ knight2 = $('<div class="home-knight" id="hk2"></div>')[ 0 ];
 // loop through and if knight.id == attr id, do the thing
 let currentKnight = ''; 
 
-const knightMove = () => {
-$('.home-knight').on('click', function(e){
-    //     currentKnight = e.target;
-        $(document).keydown(function(e){
-            if (e.keyCode === 37){ 
-                direction = 'left';
-                $('.home-knight').finish().animate({
-                    left: '-=32'
-                });
-            } else if (e.keyCode === 38){
-                direction = 'up';
-                $('.home-knight').finish().animate({
-                    top: '-=36'
-                });
-            } else if (e.keyCode === 39){
-                direction = 'right';
-                $('.home-knight').finish().animate({
-                    left: '+=32'
-                });
-            } else if (e.keyCode === 40){
-                direction = 'down';
-                $('.home-knight').finish().animate({
-                    top: '+=36'
-                });                
-            }
-    
-        });
-    });
-}
+// const knightMove = () => {
+//     const instance = this;
+//         $('.home-knight').on('click', function(e){
+//             // currentKnight = e.target;
+//             $(document).keydown(function(e){
+//                 if (e.keyCode === 37){ 
+//                     direction = 'left';
+//                     $('.home-knight').finish().animate({
+//                         left: '-=32'
+//                     });
+//                 } else if (e.keyCode === 38){
+//                     direction = 'up';
+//                     $('.home-knight').finish().animate({
+//                         top: '-=36'
+//                     });
+//                 } else if (e.keyCode === 39){
+//                     direction = 'right';
+//                     $('.home-knight').finish().animate({
+//                         left: '+=32'
+//                     });
+//                 } else if (e.keyCode === 40){
+//                     direction = 'down';
+//                     $('.home-knight').finish().animate({
+//                         top: '+=36'
+//                     }); 
+//                 }               
+        
+//             });
+//         });
+// }
+
+// knightMove();
+
+
+
+
+
+// $('.home-knight').on('click', function(e){
+//     currentKnight = e.target;
+//     if (currentKnight == $('#hk1')){
+//         knight1.move()
+//     } else if (currentKnight == $('#hk2')){
+//         knight2.move();
+//     }        
+// });
 
 // const selectKnight = () => {
 //     knightArray.forEach(function() {
@@ -147,14 +163,7 @@ $('.home-knight').on('click', function(e){
 // getting there...can move 1 move when clicked. Both still move together.
 // maybe use div id, add a matching value to pull with .val that is unique?
 
-$('.home-knight').on('click', function(e){
-    currentKnight = e.target;
-    if (currentKnight == $('#hk1')){
-        knight1.move()
-    } else if (currentKnight == $('#hk2')){
-        knight2.move();
-    }        
-});
+
 
 
 // const move = () => {
@@ -201,6 +210,7 @@ $('.home-knight').on('click', function(e){
 
 
 // Create enemy city with enemies that defend their city.
+
 const makeEnemyCity = () => {
     $('[x ="19"][y="14"]').append('<div class="enemy-city"></div>')
     $('[x ="19"][y="15"]').append('<div class="enemy-city"></div>')
@@ -236,7 +246,40 @@ class EnemyFactory {
     generateEnemy(){
         let newEnemy = new Enemies(this.enemies.length);
         this.enemies.push(newEnemy);
-        newEnemy = $(`<div class="enemy" id="e + this.enemies.length"></div>`)[ 0 ];
+        if (Math.random() < 0.3){
+            $('[x = "0"][y = "5"]').empty();
+            $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e9"></div>');
+        }
+        if (Math.random() < 0.3){
+            $('[x = "1"][y = "5"]').empty();
+            $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e10"></div>');
+        } 
+        if (Math.random() < 0.3) {
+            $('[x = "2"][y = "5"]').empty();
+            $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e11"></div>');
+        } 
+        if (Math.random() < 0.3) {
+            $('[x = "2"][y = "4"]').empty();
+            $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e12"></div>');
+        }
+        if (Math.random() < 0.3){
+            $('[x = "0"][y = "5"]').empty();
+            $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e13"></div>');
+        }
+        if (Math.random() < 0.3){
+            $('[x = "1"][y = "5"]').empty();
+            $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e14"></div>');
+        } 
+        if (Math.random() < 0.3) {
+            $('[x = "2"][y = "5"]').empty();
+            $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e15"></div>');
+        } 
+        if (Math.random() < 0.3) {
+            $('[x = "2"][y = "4"]').empty();
+            $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e16"></div>');
+        }
+
+        // newEnemy = $('div class="enemy-knight" id="e9"></div>')[ 0 ];
     }
     findEnemy(index){
         return this.enemies[index];
@@ -244,8 +287,7 @@ class EnemyFactory {
 } 
 const enemyFactory = new EnemyFactory(this.hp, this.damage, this.id);
 enemyFactory.generateEnemy();
-enemyFactory.generateEnemy();
-enemyFactory.generateEnemy();
+
 
 // instantiating the enemies
 // let enemy1 = new Enemies(100, 15, 'e1');
@@ -313,7 +355,7 @@ const spawnEnemy = () => {
         $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e"></div>');
     }
 }
-spawnEnemy();
+// spawnEnemy();
     
     // how to attack? 
     // randomize their attacks (accuracy and damage inflicted)
