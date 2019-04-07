@@ -39,18 +39,21 @@ const homeCity = {
 
 
 class Knights {
-    constructor(hp, accuracy, damage){
+    constructor(hp, accuracy, damage, id){
         this.hp = hp;
-        this.accuracy = accuracy;
         this.damage = damage;
-        this.x = 0;
-        this.y = 0;
+        this.id = id;
+        // this.accuracy = accuracy;
+        // this.x = 0;
+        // this.y = 0;
     }
 
     attack(){
 
     }
 }
+
+
 
 // only necessary if I end up adding new knights later
 class KnightFactory {
@@ -65,14 +68,25 @@ class KnightFactory {
     }
 } 
 
-let knight1 = new Knights(100, 1, 15);
 
 const addKnightsToUI = () => {
-$('[x ="0"][y="2"]').append('<div class="home-knight" id="hk1"></div>')
-$('[x ="1"][y="2"]').append('<div class="home-knight" id="hk2"></div>')
+$('[x ="0"][y="2"]').append('<div class="home-knight" id="0"></div>')
+$('[x ="1"][y="2"]').append('<div class="home-knight" id="1"></div>')
 }
 addKnightsToUI();
 
+
+const knightArray = [];
+
+// instantiating the first knight
+let knight1 = new Knights(100, 15, 1);
+knightArray.push(knight1);
+
+// attaching object to div, MISSING STATS
+knight1 = $('<div class="home-knight" id="hk1"></div>')[ 0 ];
+
+
+// knight1.hp = 5;
 
 // movement, figure out how to move them individually.
 // make it a function and call it in the class somehow?
@@ -83,35 +97,57 @@ addKnightsToUI();
 // loop through and if knight.id == attr id, do the thing
 let currentKnight = ''; 
 
+// const selectKnight = () => {
+//     knightArray.forEach(function() {
+//         $('.home-knight').on('click', function(e){
+//             // if div id == [i]
+
+//         })
+//     })
+
+// getting there...can move 1 move when clicked. Both still move together.
+
+$('.home-knight').on('click', function(e){
+    currentKnight = e.target;         
+});
+
+
 const move = () => {
-$('.home-knights').on('click', function(e){
     $(document).keydown(function(e){
-        if (e.keyCode === 37){ 
-            direction = 'left';
-            $('.home-knights').finish().animate({
-                left: '-=32'
-            });
-        } else if (e.keyCode === 38){
-            direction = 'up';
-            $('.home-knights').finish().animate({
-                top: '-=36'
-            });
-        } else if (e.keyCode === 39){
-            direction = 'right';
-            $('.home-knights').finish().animate({
-                left: '+=32'
-            });
-        } else if (e.keyCode === 40){
-            direction = 'down';
-            $('.home-knights').finish().animate({
-                top: '+=36'
-            });                
+        if (currentKnight){
+            if (e.keyCode === 37){ 
+                direction = 'left';
+                $('.home-knight').finish().animate({
+                    left: '-=32'
+                });
+            } else if (e.keyCode === 38){
+                direction = 'up';
+                $('.home-knight').finish().animate({
+                    top: '-=36'
+                });
+            } else if (e.keyCode === 39){
+                direction = 'right';
+                $('.home-knight').finish().animate({
+                    left: '+=32'
+                });
+            } else if (e.keyCode === 40){
+                direction = 'down';
+                $('.home-knight').finish().animate({
+                    top: '+=36'
+                });                
+            }
         }
     });
-})
 }
 move();
 
+
+$(document).keyup(function(e){
+    if(currentKnight){
+        currentKnight = false;
+        $('.home-knight').stop(true, true);
+    }
+})
 
 // tried .focus, .off, button to remove all event listeners with .off
 
@@ -135,21 +171,53 @@ const enemyCity = {
 
     // how many to defend city? 8
 const addEnemiesToUI = () => {
-    $('[x = "19"][y = "13"]').append('<div class="enemy-knights" id="ek1"></div>')
-    $('[x = "19"][y = "16"]').append('<div class="enemy-knights" id="ek2"></div>')
-    $('[x = "18"][y = "13"]').append('<div class="enemy-knights" id="ek3"></div>')
-    $('[x = "18"][y = "16"]').append('<div class="enemy-knights" id="ek4"></div>')
-    $('[x = "17"][y = "13"]').append('<div class="enemy-knights" id="ek5"></div>')
-    $('[x = "17"][y = "14"]').append('<div class="enemy-knights" id="ek6"></div>')
-    $('[x = "17"][y = "15"]').append('<div class="enemy-knights" id="ek7"></div>')
-    $('[x = "17"][y = "16"]').append('<div class="enemy-knights" id="ek8"></div>')
+    $('[x = "19"][y = "13"]').append('<div class="enemy-knight" id="e1"></div>')
+    $('[x = "19"][y = "16"]').append('<div class="enemy-knight" id="e2"></div>')
+    $('[x = "18"][y = "13"]').append('<div class="enemy-knight" id="e3"></div>')
+    $('[x = "18"][y = "16"]').append('<div class="enemy-knight" id="e4"></div>')
+    $('[x = "17"][y = "13"]').append('<div class="enemy-knight" id="e5"></div>')
+    $('[x = "17"][y = "14"]').append('<div class="enemy-knight" id="e6"></div>')
+    $('[x = "17"][y = "15"]').append('<div class="enemy-knight" id="e7"></div>')
+    $('[x = "17"][y = "16"]').append('<div class="enemy-knight" id="e8"></div>')
 }
 addEnemiesToUI();
-    // how to deterimine they are enemies?
+
+    // Have enemies pop up and randomly attack home city.
+    // how to deterimine they are enemies? class="enemy-knight" id="e1" "e2" etc.
     // how to spawn next to home city?
+    // how to randomize their spawns
+
+const spawnEnemy = () => {
+    if (Math.random() < 0.3){
+        $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
+    }
+    if (Math.random() < 0.3){
+        $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
+    } 
+    if (Math.random() < 0.3) {
+        $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
+    } 
+    if (Math.random() < 0.3) {
+        $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e"></div>');
+    }
+    if (Math.random() < 0.3){
+        $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
+    }
+    if (Math.random() < 0.3){
+        $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
+    } 
+    if (Math.random() < 0.3) {
+        $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
+    } 
+    if (Math.random() < 0.3) {
+        $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e"></div>');
+    }
+}
+spawnEnemy();
+    
     // how to attack? 
-        //randomize attacks (accuracy and damage inflicted)
-    // how to defend?
+    // randomize their attacks (accuracy and damage inflicted)
+    // give them hp stat, they disappear when it reaches 0
 
 // Set up timer.
     // set up in seconds
@@ -160,20 +228,7 @@ addEnemiesToUI();
         // do cities build defenses back up? 
         // should timer appear on screen?
 
-// Have enemies pop up and randomly attack home city.
-    // how to randomize their spawns
-    // randomize their attacks (accuracy and damage inflicted)
-    // give them hp stat, they disappear when it reaches 0
+
 
 // As time increases, so do enemy hordes.
-
-
-// BONUS
-// Create ally city that will add to player's attack and defense as long as player is 
-// near it.
-    // how does it know when the player is near the city?
-    // add defense/extra hp to home city
-    // add attack accuracy/damage inflicted to player's people?
-
-// Player needs to protect ally city + home city.
 
