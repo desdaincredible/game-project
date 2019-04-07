@@ -1,3 +1,41 @@
+// Set up timer.
+    // set up in seconds
+    let timePassing;
+    let seconds = 0;
+    
+    const secondsGoUp = () => {
+        seconds++;
+        console.log(seconds);
+    }
+    secondsGoUp();
+    
+    const startGame = () => {
+        $('body').append('<button id="start">PLAY</button>');
+        // sets up seconds
+        $('#start').click(function(){
+            timePassing = setInterval(secondsGoUp, 1000);
+        })
+        console.log(seconds);
+        }
+    startGame();
+    
+    const pauseGame = () => {
+        $('body').append('<button id="stop">PAUSE</button>');
+        //stops timer
+        $('#stop').click(function(){
+            clearInterval(timePassing);
+        })
+    }
+    pauseGame();
+        // what links to timer? 
+            // everyone's attacks (can only hit so often)
+            // enemy spawn times and amounts (randomized)
+            // level ups
+            // do cities build defenses back up? 
+            // should timer appear on screen?
+            // As time increases, so do enemy hordes.
+    
+
 // Create a grid.
     // how big/number of squares? 
     // size of squares?
@@ -69,6 +107,8 @@ class KnightFactory {
     generateKnight(){
         const newKnight = new Knights(this.knights.length);
         this.knights.push(newKnight);
+        // generate new defense knight every 30 seconds
+        // setup once timer is set
     }
     findKnight(index){
         return this.knights[index];
@@ -348,17 +388,3 @@ addEnemiesToUI();
     // randomize their attacks (accuracy and damage inflicted)
 
     // give them hp stat, they disappear when it reaches 0
-
-// Set up timer.
-    // set up in seconds
-    // what links to timer? 
-        // everyone's attacks (can only hit so often)
-        // enemy spawn times and amounts (randomized)
-        // level ups
-        // do cities build defenses back up? 
-        // should timer appear on screen?
-
-
-
-// As time increases, so do enemy hordes.
-
