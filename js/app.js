@@ -100,6 +100,11 @@ knight2 = $('<div class="home-knight" id="hk2"></div>')[ 0 ];
 // movement, figure out how to move them individually.
 // make it a function and call it in the class somehow?
 
+//////////////
+// if I can't get the movement thing to work, maybe change idea to having one unit that 
+// walks/attacks and ability to place stationary fighters to defend city
+//////////////
+
 // currentKnight = some kind of hybrid jquery js thing
 // the div selected, unique id attribute
 // maybe create an array with knight objects, referencing their id key (make it same as div)
@@ -232,6 +237,7 @@ class Enemies {
     }
 
     attackCity(){
+        // if near knight or home city, auto attack (city takes priority)
         homeCity.defenses - Enemies.damage;
     }
     attackKnight(){
@@ -239,44 +245,53 @@ class Enemies {
     }
 }
 
+enemyArray = [];
+
 class EnemyFactory {
     constructor(){
         this.enemies = [];
     }
     generateEnemy(){
         let newEnemy = new Enemies(this.enemies.length);
-        this.enemies.push(newEnemy);
         if (Math.random() < 0.3){
             $('[x = "0"][y = "5"]').empty();
             $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e9"></div>');
+            this.enemies.push(newEnemy);
         }
         if (Math.random() < 0.3){
             $('[x = "1"][y = "5"]').empty();
             $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e10"></div>');
+            this.enemies.push(newEnemy);
         } 
         if (Math.random() < 0.3) {
             $('[x = "2"][y = "5"]').empty();
             $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e11"></div>');
+            this.enemies.push(newEnemy);
         } 
         if (Math.random() < 0.3) {
             $('[x = "2"][y = "4"]').empty();
             $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e12"></div>');
+            this.enemies.push(newEnemy);
         }
         if (Math.random() < 0.3){
             $('[x = "0"][y = "5"]').empty();
             $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e13"></div>');
+            this.enemies.push(newEnemy);
         }
         if (Math.random() < 0.3){
             $('[x = "1"][y = "5"]').empty();
             $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e14"></div>');
+            this.enemies.push(newEnemy);
         } 
         if (Math.random() < 0.3) {
             $('[x = "2"][y = "5"]').empty();
             $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e15"></div>');
+            this.enemies.push(newEnemy);
         } 
         if (Math.random() < 0.3) {
             $('[x = "2"][y = "4"]').empty();
             $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e16"></div>');
+            this.enemies.push(newEnemy);
         }
 
         // newEnemy = $('div class="enemy-knight" id="e9"></div>')[ 0 ];
@@ -289,73 +304,45 @@ const enemyFactory = new EnemyFactory(this.hp, this.damage, this.id);
 enemyFactory.generateEnemy();
 
 
-// instantiating the enemies
-// let enemy1 = new Enemies(100, 15, 'e1');
-// enemyArray.push(enemy1);
-
-// let enemy2 = new Enemies(100, 15, 'e2');
-// enemyArray.push(enemy2);
-
-// attaching object to div (stats show when added to array)
-// find a way to make this work when generating new enemies
-// enemy1 = $('<div class="enemy-knight" id="e1"></div>')[ 0 ];
-// enemy2 = $('<div class="enemy-knight" id="e2"></div>')[ 0 ];
-
-
     // how many to defend city? 8
 const addEnemiesToUI = () => {
+    let enemy1 = new Enemies(100, 15, 1);
+    enemyArray.push(enemy1);
     $('[x = "19"][y = "13"]').append('<div class="enemy-knight" id="e1"></div>')
+    enemy1 = $('<div class="enemy-knight" id="e1"></div>')[ 0 ];
+    let enemy2 = new Enemies(100, 15, 2);
+    enemyArray.push(enemy2);
     $('[x = "19"][y = "16"]').append('<div class="enemy-knight" id="e2"></div>')
+    enemy2 = $('<div class="enemy-knight" id="e2"></div>')[ 0 ];
+    let enemy3 = new Enemies(100, 15, 3);
+    enemyArray.push(enemy3);
     $('[x = "18"][y = "13"]').append('<div class="enemy-knight" id="e3"></div>')
+    enemy3 = $('<div class="enemy-knight" id="e3"></div>')[ 0 ];
+    let enemy4 = new Enemies(100, 15, 4);
+    enemyArray.push(enemy4);
     $('[x = "18"][y = "16"]').append('<div class="enemy-knight" id="e4"></div>')
+    enemy4 = $('<div class="enemy-knight" id="e4"></div>')[ 0 ];
+    let enemy5 = new Enemies(100, 15, 5);
+    enemyArray.push(enemy5);
     $('[x = "17"][y = "13"]').append('<div class="enemy-knight" id="e5"></div>')
+    enemy5 = $('<div class="enemy-knight" id="e5"></div>')[ 0 ];
+    let enemy6 = new Enemies(100, 15, 6);
+    enemyArray.push(enemy6);
     $('[x = "17"][y = "14"]').append('<div class="enemy-knight" id="e6"></div>')
+    enemy6 = $('<div class="enemy-knight" id="e6"></div>')[ 0 ];
+    let enemy7 = new Enemies(100, 15, 7);
+    enemyArray.push(enemy7);
     $('[x = "17"][y = "15"]').append('<div class="enemy-knight" id="e7"></div>')
+    enemy7 = $('<div class="enemy-knight" id="e7"></div>')[ 0 ];
+    let enemy8 = new Enemies(100, 15, 8);
+    enemyArray.push(enemy8);
     $('[x = "17"][y = "16"]').append('<div class="enemy-knight" id="e8"></div>')
+    enemy8 = $('<div class="enemy-knight" id="e8"></div>')[ 0 ];
 }
 addEnemiesToUI();
 
     // Have enemies pop up and randomly attack home city.
-    // how to deterimine they are enemies? class="enemy-knight" id="e1" "e2" etc.
-    // how to spawn next to home city?
-    // how to randomize their spawns
 
-// how to make them not spawn on a location that's already occupied? empty first.
-const spawnEnemy = () => {
-    if (Math.random() < 0.3){
-        $('[x = "0"][y = "5"]').empty();
-        $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
-    }
-    if (Math.random() < 0.3){
-        $('[x = "1"][y = "5"]').empty();
-        $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
-    } 
-    if (Math.random() < 0.3) {
-        $('[x = "2"][y = "5"]').empty();
-        $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
-    } 
-    if (Math.random() < 0.3) {
-        $('[x = "2"][y = "4"]').empty();
-        $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e"></div>');
-    }
-    if (Math.random() < 0.3){
-        $('[x = "0"][y = "5"]').empty();
-        $('[x = "0"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
-    }
-    if (Math.random() < 0.3){
-        $('[x = "1"][y = "5"]').empty();
-        $('[x = "1"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
-    } 
-    if (Math.random() < 0.3) {
-        $('[x = "2"][y = "5"]').empty();
-        $('[x = "2"][y = "5"]').append('<div class="enemy-knight" id="e"></div>');
-    } 
-    if (Math.random() < 0.3) {
-        $('[x = "2"][y = "4"]').empty();
-        $('[x = "2"][y = "4"]').append('<div class="enemy-knight" id="e"></div>');
-    }
-}
-// spawnEnemy();
     
     // how to attack? 
     // randomize their attacks (accuracy and damage inflicted)
