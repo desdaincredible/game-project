@@ -190,6 +190,8 @@ class Enemies {
 enemyDefenseArray = [];
 enemyAttackerArray = [];
 
+// if (Math.random() < 0.3 || seconds % someNumber ===0 && Math.random() < 0.4)
+// to increase spawns as time goes on
 const enemyFactory = {
     generateEnemyDefense() {
         if (game.enemyCityDefense < 8){
@@ -250,11 +252,18 @@ knightDefenseAttack = () =>{
 }
 
 // all enemies hp are connected, hitting one takes hp from all
+// e.target == enemy, find id, remove hp from that index in the enemyDefenseArray
+
+// add city attack
 battleUnitAttack = () => {
     $('.enemy-knight').on('click', function (e){
-        console.log(enemyDefenseArray[0].hp)
+        const victimId = $(e.target).attr('id');
+        console.log(victimId);
         for (let i = 0; i < enemyDefenseArray.length; i++){
-            enemyDefenseArray[i].hp = enemyDefenseArray[i].hp - battleUnitArray[0].damage;        
+            // make this work
+            if (victimId == enemyDefenseArray[i].id)
+                console.log(enemyDefenseArray[0].hp);
+                enemyDefenseArray[i].hp = enemyDefenseArray[i].hp - battleUnitArray[0].damage;      
         }
     })
 }
