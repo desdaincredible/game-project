@@ -71,9 +71,6 @@ if (seconds % 1 === 0){
     $('body').append(`<div class="clock">${seconds}</div>`);
 }
 
-
-
-
 class HomeCity  {
     constructor(defenses, x, y){
         this.defenses = defenses;
