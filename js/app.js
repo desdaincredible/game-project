@@ -80,17 +80,69 @@ class Knights {
 
 const knightFactory = {
     knightsArray: [],
+
+    // make this DRY
     generateDefenseKnight(){
         let newDefenseKnight = new Knights(this.knightsArray.length);
         this.knightsArray.push(newDefenseKnight);
         // knightFactory.generateDefenseKnight every 30 seconds, if there isn't one in that spot
         if (game.defenseCheck < 8 && game.lives > 0){
-            // Math.random for location
-            $('[x = "0"][y = "1"]').empty();
-            $('[x = "1"][y = "1"]').append('<div class="home-knight" id="d1"></div>');
+            if (Math.random() < 0.5){
+            $('[x = "0"][y = "2"]').empty();
+            $('[x = "0"][y = "2"]').append('<div class="home-knight" id="d1"></div>');
             this.knightsArray.push(newDefenseKnight);
             newDefenseKnight = $('<div class="home-knight" id="d1"></div>');
             game.defenseCheck++;
+            }
+            if (Math.random() < 0.5){
+            $('[x = "1"][y = "2"]').empty();
+            $('[x = "1"][y = "2"]').append('<div class="home-knight" id="d2"></div>');
+            this.knightsArray.push(newDefenseKnight);
+            newDefenseKnight = $('<div class="home-knight" id="d1"></div>');
+            game.defenseCheck++;
+            }
+            if (Math.random() < 0.5){
+            $('[x = "2"][y = "2"]').empty();
+            $('[x = "2"][y = "2"]').append('<div class="home-knight" id="d3"></div>');
+            this.knightsArray.push(newDefenseKnight);
+            newDefenseKnight = $('<div class="home-knight" id="d1"></div>');
+            game.defenseCheck++;
+            }
+            if (Math.random() < 0.5){
+            $('[x = "2"][y = "3"]').empty();
+            $('[x = "2"][y = "3"]').append('<div class="home-knight" id="d4"></div>');
+            this.knightsArray.push(newDefenseKnight);
+            newDefenseKnight = $('<div class="home-knight" id="d1"></div>');
+            game.defenseCheck++;
+            }
+            if (Math.random() < 0.5){
+            $('[x = "2"][y = "4"]').empty();
+            $('[x = "2"][y = "4"]').append('<div class="home-knight" id="d5"></div>');
+            this.knightsArray.push(newDefenseKnight);
+            newDefenseKnight = $('<div class="home-knight" id="d6"></div>');
+            game.defenseCheck++;
+            }
+            if (Math.random() < 0.5){
+            $('[x = "2"][y = "5"]').empty();
+            $('[x = "2"][y = "5"]').append('<div class="home-knight" id="d7"></div>');
+            this.knightsArray.push(newDefenseKnight);
+            newDefenseKnight = $('<div class="home-knight" id="d1"></div>');
+            game.defenseCheck++;
+            }
+            if (Math.random() < 0.5){
+            $('[x = "1"][y = "5"]').empty();
+            $('[x = "1"][y = "5"]').append('<div class="home-knight" id="d8"></div>');
+            this.knightsArray.push(newDefenseKnight);
+            newDefenseKnight = $('<div class="home-knight" id="d1"></div>');
+            game.defenseCheck++;
+            }
+            if (Math.random() < 0.5){
+            $('[x = "0"][y = "5"]').empty();
+            $('[x = "0"][y = "5"]').append('<div class="home-knight" id="d9"></div>');
+            this.knightsArray.push(newDefenseKnight);
+            newDefenseKnight = $('<div class="home-knight" id="d1"></div>');
+            game.defenseCheck++;
+            }
         }
         // make rest of spawn locations once attacks work
     },
@@ -149,16 +201,11 @@ const battleMove = () => {
             });
         });
 }
-
 battleMove();
 
-// Create enemy city with enemies that defend their city.
-
+// Enemies
 const makeEnemyCity = () => {
-    $('[x ="19"][y="14"]').append('<div class="enemy-city"></div>')
-    $('[x ="19"][y="15"]').append('<div class="enemy-city"></div>')
     $('[x ="18"][y="14"]').append('<div class="enemy-city"></div>')
-    $('[x ="18"][y="15"]').append('<div class="enemy-city"></div>')
 }
 makeEnemyCity();
 
@@ -169,8 +216,8 @@ const enemyCity = {
 
 class Enemies {
     constructor(id){
-        this.hp = 100;
-        this.damage = 15;
+        this.hp = Math.floor(Math.random() * (100 - 25 + 1)) + 25;;
+        this.damage = Math.floor(Math.random() * (15 - 5 + 1)) + 5;;
         this.id = id;
     }
 
@@ -185,6 +232,7 @@ class Enemies {
 
 enemyArray = [];
 
+// find a way to do this DRY
 class EnemyFactory {
     constructor(){
         this.enemies = [];
@@ -273,8 +321,7 @@ class EnemyFactory {
 const enemyFactory = new EnemyFactory(this.hp, this.damage, this.id);
 enemyFactory.generateEnemy();
 
-
-    // how many to defend city? 8
+// enemy city defense
 const addEnemiesToUI = () => {
     let enemy1 = new Enemies(100, 15, 1);
     enemyArray.push(enemy1);
@@ -310,8 +357,6 @@ const addEnemiesToUI = () => {
     enemy8 = $('<div class="enemy-knight" id="e8"></div>')[ 0 ];
 }
 addEnemiesToUI();
-
-    // Have enemies pop up and randomly attack home city.
 
     
     // how to attack? 
