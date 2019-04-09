@@ -128,7 +128,6 @@ const knightFactory = {
     }
 }
 
-
 class BattleUnit {
     constructor(id){
         this.hp = 150;
@@ -227,73 +226,73 @@ const enemyFactory = {
                 newEnemy1 = $('<div class="enemy-defense" id="1"></div>')[ 0 ];
                 game.enemyCityDefense++;
         
-            let newEnemy2 = new Enemies(3);
+            let newEnemy2 = new Enemies(2);
             enemyDefenseArray.push(newEnemy2);
-                $('[x = "17"][y = "14"]').append('<div class="enemy-defense" id="3"></div>');
-                newEnemy2 = $('<div class="enemy-defense" id="3"></div>')[ 0 ];
+                $('[x = "17"][y = "14"]').append('<div class="enemy-defense" id="2"></div>');
+                newEnemy2 = $('<div class="enemy-defense" id="2"></div>')[ 0 ];
                 game.enemyCityDefense++;
         
-            let newEnemy3 = new Enemies(4);
+            let newEnemy3 = new Enemies(3);
             enemyDefenseArray.push(newEnemy3);
-                $('[x = "17"][y = "15"]').append('<div class="enemy-defense" id="4"></div>');
-                newEnemy3 = $('<div class="enemy-defense" id="4"></div>')[ 0 ];
+                $('[x = "17"][y = "15"]').append('<div class="enemy-defense" id="3"></div>');
+                newEnemy3 = $('<div class="enemy-defense" id="3"></div>')[ 0 ];
                 game.enemyCityDefense++;
         
-            let newEnemy4 = new Enemies(5);
+            let newEnemy4 = new Enemies(4);
             enemyDefenseArray.push(newEnemy4);
-                $('[x = "18"][y = "16"]').append('<div class="enemy-defense" id="5"></div>');
-                newEnemy4 = $('<div class="enemy-defense" id="5"></div>')[ 0 ];
+                $('[x = "18"][y = "16"]').append('<div class="enemy-defense" id="4"></div>');
+                newEnemy4 = $('<div class="enemy-defense" id="4"></div>')[ 0 ];
                 game.enemyCityDefense++;
         
-            let newEnemy5 = new Enemies(7);
+            let newEnemy5 = new Enemies(5);
             enemyDefenseArray.push(newEnemy5);
-                $('[x = "19"][y = "16"]').append('<div class="enemy-defense" id="7"></div>');
-                newEnemy5 = $('<div class="enemy-defense" id="7"></div>')[ 0 ];
+                $('[x = "19"][y = "16"]').append('<div class="enemy-defense" id="5"></div>');
+                newEnemy5 = $('<div class="enemy-defense" id="5"></div>')[ 0 ];
                 game.enemyCityDefense++;
     },
     
     generateEnemyAttacker() {
         if (Math.random() < 0.3){
-            let newEnemy = new Enemies(0);
-            enemyAttackerArray.push(newEnemy);
+            let newEnemy0 = new Enemies(0);
+            enemyAttackerArray.push(newEnemy0);
             // $('[x = "0"][y = "1"]').empty();
             $('[x = "0"][y = "1"]').append(`<div class="enemy-attacker" id="0"></div>`);
-            newEnemy = $(`<div class="enemy-attacker" id="0"></div>`)[ 0 ];
+            newEnemy0 = $(`<div class="enemy-attacker" id="0"></div>`)[ 0 ];
         }
         if (Math.random() < 0.3){
-            let newEnemy = new Enemies(1);
-            enemyAttackerArray.push(newEnemy);
+            let newEnemy1 = new Enemies(1);
+            enemyAttackerArray.push(newEnemy1);
             // $('[x = "1"][y = "1"]').empty();
             $('[x = "1"][y = "1"]').append(`<div class="enemy-attacker" id="1"></div>`);
-            newEnemy = $(`<div class="enemy-attacker" id="1"></div>`)[ 0 ];
+            newEnemy1 = $(`<div class="enemy-attacker" id="1"></div>`)[ 0 ];
         }
         if (Math.random() < 0.3){
-            let newEnemy = new Enemies(2);
-            enemyAttackerArray.push(newEnemy);
+            let newEnemy2 = new Enemies(2);
+            enemyAttackerArray.push(newEnemy2);
             // $('[x = "3"][y = "3"]').empty();
             $('[x = "3"][y = "3"]').append(`<div class="enemy-attacker" id="2"></div>`);
-            newEnemy = $(`<div class="enemy-attacker" id="2"></div>`)[ 0 ];
+            newEnemy2 = $(`<div class="enemy-attacker" id="2"></div>`)[ 0 ];
         }
         if (Math.random() < 0.3){
-            let newEnemy = new Enemies(3);
-            enemyAttackerArray.push(newEnemy);
+            let newEnemy3 = new Enemies(3);
+            enemyAttackerArray.push(newEnemy3);
             // $('[x = "3"][y = "4"]').empty();
             $('[x = "3"][y = "4"]').append(`<div class="enemy-attacker" id="3"></div>`);
-            newEnemy = $(`<div class="enemy-attacker" id="3"></div>`)[ 0 ];
+            newEnemy3 = $(`<div class="enemy-attacker" id="3"></div>`)[ 0 ];
         }
         if (Math.random() < 0.3){
-            let newEnemy = new Enemies(4);
-            enemyAttackerArray.push(newEnemy);
+            let newEnemy4 = new Enemies(4);
+            enemyAttackerArray.push(newEnemy4);
             // $('[x = "1"][y = "6"]').empty();
             $('[x = "1"][y = "6"]').append(`<div class="enemy-attacker" id="4"></div>`);
-            newEnemy = $(`<div class="enemy-attacker" id="4"></div>`)[ 0 ];
+            newEnemy4 = $(`<div class="enemy-attacker" id="4"></div>`)[ 0 ];
         }
         if (Math.random() < 0.3){
-            let newEnemy = new Enemies(5);
-            enemyAttackerArray.push(newEnemy);
+            let newEnemy5 = new Enemies(5);
+            enemyAttackerArray.push(newEnemy5);
             // $('[x = "0"][y = "6"]').empty();
             $('[x = "0"][y = "6"]').append(`<div class="enemy-attacker" id="5"></div>`);
-            newEnemy = $(`<div class="enemy-attacker" id="5"></div>`)[ 0 ];
+            newEnemy5 = $(`<div class="enemy-attacker" id="5"></div>`)[ 0 ];
         }
     }
     
@@ -304,7 +303,7 @@ const enemyFactory = {
 const enemyAttack = () =>{
     // if (seconds % 2 === 0) {
         for (let i = 0; i < enemyAttackerArray.length; i++){
-            for (let x = 0; x < enemyAttackerArray.length; x++){
+            for (let x = 0; x < knightDefenseArray.length; x++){
                 if (knightDefenseArray[x] && enemyAttackerArray[i]){
                     knightDefenseArray[x].hp = knightDefenseArray[x].hp - enemyAttackerArray[i].damage;
                     // if (knightDefenseArray[i].hp <= 0){
@@ -325,28 +324,29 @@ const enemyAttack = () =>{
     // }
 }
 
-
+// why are the hp <= 0's disappearing randomly?
 const knightDefenseAttack = () =>{
     for (let i = 0; i < knightDefenseArray.length; i++){
         for (let x = 0; x < enemyAttackerArray.length; x++){
             enemyAttackerArray[x].hp = enemyAttackerArray[x].hp - knightDefenseArray[i].damage;
             if (enemyAttackerArray[0] && enemyAttackerArray[0].hp <= 0){
-                $('[x = "0"][y = "1"]').css('opacity', 0);
+                $('[x = "0"][y = "1"]').css('opacity', 0.5);
+                //$(`#${enemyAttackerArray[i].id}`).css
             }
             if (enemyAttackerArray[1] && enemyAttackerArray[1].hp <= 0){
-                $('[x = "1"][y = "1"]').css('opacity', 0);
+                $('[x = "1"][y = "1"]').css('opacity', 0.5);
             }
             if (enemyAttackerArray[2] && enemyAttackerArray[2].hp <= 0){
-                $('[x = "3"][y = "3"]').css('opacity', 0);
+                $('[x = "3"][y = "3"]').css('opacity', 0.5);
             }
             if (enemyAttackerArray[3] && enemyAttackerArray[3].hp <= 0){
-                $('[x = "3"][y = "4"]').css('opacity', 0);
+                $('[x = "3"][y = "4"]').css('opacity', 0.5);
             }
             if (enemyAttackerArray[4] && enemyAttackerArray[4].hp <= 0){
-                $('[x = "1"][y = "6"]').css('opacity', 0);
+                $('[x = "1"][y = "6"]').css('opacity', 0.5);
             }
             if (enemyAttackerArray[5] && enemyAttackerArray[5].hp <= 0){
-                $('[x = "0"][y = "6"]').css('opacity', 0);
+                $('[x = "0"][y = "6"]').css('opacity', 0.5);
             }
         }
 
@@ -357,40 +357,76 @@ const battleUnitAttack = () => {
     $('.enemy-defense').on('click', function (e){
         const victimId = $(e.target).attr('id');
         console.log(victimId)
-    if (seconds % 2 === 0){
         for (let i = 0; i < enemyDefenseArray.length; i++){
-            if (victimId == enemyDefenseArray[i].id){
-                enemyDefenseArray[i].hp = enemyDefenseArray[i].hp - battleUnitArray[0].damage;      
-            } 
+            for (let x = 0; x < battleUnitArray.length; x++){
+                if (victimId == enemyDefenseArray[i].id){
+                    enemyDefenseArray[i].hp = enemyDefenseArray[i].hp - battleUnitArray[0].damage; 
+                    if (enemyDefenseArray[0] && enemyDefenseArray[0].hp <= 0){
+                        $('[x = "19"][y = "13"]').css('opacity', 0.5);
+                    }  
+                    if (enemyDefenseArray[1] && enemyDefenseArray[1].hp <= 0){
+                        $('[x = "18"][y = "13"]').css('opacity', 0.5);
+                    }  
+                    if (enemyDefenseArray[2] && enemyDefenseArray[2].hp <= 0){
+                        $('[x = "17"][y = "14"]').css('opacity', 0.5);
+                    }  
+                    if (enemyDefenseArray[3] && enemyDefenseArray[3].hp <= 0){
+                        $('[x = "17"][y = "15"]').css('opacity', 0.5);
+                    }  
+                    if (enemyDefenseArray[4] && enemyDefenseArray[4].hp <= 0){
+                        $('[x = "18"][y = "16"]').css('opacity', 0.5);
+                    }  
+                    if (enemyDefenseArray[5] && enemyDefenseArray[5].hp <= 0){
+                        $('[x = "19"][y = "16"]').css('opacity', 0.5);
+                    }     
+                } 
+            }
         }
-    }
-
     })
+
     $('.enemy-attacker').on('click', function (e){
         const victimId = $(e.target).attr('id');
         console.log(victimId)
-        if (seconds % 2 === 0){
             for (let i = 0; i < enemyAttackerArray.length; i++){
-                if (victimId == enemyAttackerArray[i].id){
-                    enemyAttackerArray[i].hp = enemyAttackerArray[i].hp - battleUnitArray[0].damage;      
+                for (let x = 0; x < battleUnitArray.length; x++){
+                    if (victimId == enemyAttackerArray[i].id){
+                        enemyAttackerArray[i].hp = enemyAttackerArray[i].hp - battleUnitArray[0].damage;
+                        if (enemyAttackerArray[0] && enemyAttackerArray[0].hp <= 0){
+                            $('[x = "0"][y = "1"]').css('opacity', 0.5);
+                        }
+                        if (enemyAttackerArray[1] && enemyAttackerArray[1].hp <= 0){
+                            $('[x = "1"][y = "1"]').css('opacity', 0.5);
+                        }
+                        if (enemyAttackerArray[2] && enemyAttackerArray[2].hp <= 0){
+                            $('[x = "3"][y = "3"]').css('opacity', 0.5);
+                        }
+                        if (enemyAttackerArray[3] && enemyAttackerArray[3].hp <= 0){
+                            $('[x = "3"][y = "4"]').css('opacity', 0.5);
+                        }
+                        if (enemyAttackerArray[4] && enemyAttackerArray[4].hp <= 0){
+                            $('[x = "1"][y = "6"]').css('opacity', 0.5);
+                        }
+                        if (enemyAttackerArray[5] && enemyAttackerArray[5].hp <= 0){
+                            $('[x = "0"][y = "6"]').css('opacity', 0.5);
+                        }     
+                    }
                 } 
     
             }
-        }
     })
-    $('.enemy-city').on('click', function (e){
-        const victimId = $(e.target).attr('id');
-        if (seconds % 2 === 0){
-            if (victimId == 'enemy-city'){
-                enemyCity.defenses = enemyCity.defenses - battleUnitArray[0].damage;
-                if (enemyCity.defenses <= 0){
-                    $('.enemy-city').remove();
-                    alert('YOU WIN!!!')
-                }
-            }
-        }
+    // $('.enemy-city').on('click', function (e){
+    //     const victimId = $(e.target).attr('id');
+    //     if (seconds % 2 === 0){
+    //         if (victimId == 'enemy-city'){
+    //             enemyCity.defenses = enemyCity.defenses - battleUnitArray[0].damage;
+    //             if (enemyCity.defenses <= 0){
+    //                 $('.enemy-city').remove();
+    //                 alert('YOU WIN!!!')
+    //             }
+    //         }
+    //     }
 
-    })
+    // })
 
 }
 
@@ -434,13 +470,22 @@ if (seconds % 1 === 0){
 const generator = () => {
     // if (seconds % 30 === 0){
         enemyFactory.generateEnemyAttacker();
+        enemyAttack();
         enemyFactory.generateEnemyDefense(); 
         battleUnitFactory.generateBattleUnit();
+        battleMove();
         battleUnitAttack();
         knightFactory.generateDefenseKnight();
-        knightDefenseAttack();
-        knightDefenseAttack();
-        knightDefenseAttack();
+        knightDefenseAttack()
+        knightDefenseAttack()
+        knightDefenseAttack()
+        knightDefenseAttack()
+        knightDefenseAttack()
+        knightDefenseAttack()
+        knightDefenseAttack()
+        knightDefenseAttack()
+        knightDefenseAttack()
+
  
     // }
 }
@@ -448,8 +493,8 @@ generator();
 
 const attacks = () => {
     if (seconds % 2 === 0) {
-        enemyAttack();
-        knightDefenseAttack()
+        console.log(enemyAttackerArray);
+
     }
 }
 
