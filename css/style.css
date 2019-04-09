@@ -23,7 +23,7 @@
     position: absolute;
 }
 
-#enemy-city {
+.enemy-city {
     background-color: darkred;
     width: 30px;
     height: 35px;
