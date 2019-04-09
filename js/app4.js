@@ -60,9 +60,11 @@ const pauseGame = () => {
 pauseGame();
 
 // level ups
-if (seconds % 180 === 0){
-    game.level++;
-}  
+const levelUp = () => {
+    if (seconds % 180 === 0){
+        game.level++;
+    }  
+}
 
 class HomeCity  {
     constructor(defenses, x, y){
@@ -74,102 +76,66 @@ class HomeCity  {
 let homeCity = new HomeCity(500, [0, 1], [3, 4]);
 
 class Knights {
-    constructor(id, x, y){
+    constructor(id){
         this.hp = 50;
         this.damage = Math.floor(Math.random() * (15 - 5 + 1)) + 5;
         this.id = id;
-        this.x = x;
-        this.y = y;
+        // this.x = x;
+        // this.y = y;
     }
 }
 
 knightDefenseArray = [];
 
 const knightFactory = {
-    // make this DRY?
     generateDefenseKnight(){
         // knightFactory.generateDefenseKnight every 30 seconds, if there isn't one in that spot
-        if (game.defenseCheck < 8){
-            let newDefenseKnight = new Knights(knightDefenseArray.length);
-            // $('[x = "0"][y = "2"]').empty();
+            let newDefenseKnight = new Knights(0);
             $('[x = "0"][y = "2"]').append('<div class="home-knight" id="0"></div>');
             knightDefenseArray.push(newDefenseKnight);
             newDefenseKnight = $('<div class="home-knight" id="0"></div>');
             game.defenseCheck++;
-        }
-        if (game.defenseCheck < 8){
-            let newDefenseKnight = new Knights(knightDefenseArray.length);
-            // $('[x = "1"][y = "2"]').empty();
-            $('[x = "1"][y = "2"]').append('<div class="home-knight" id="1"></div>');
-            knightDefenseArray.push(newDefenseKnight);
-            newDefenseKnight = $('<div class="home-knight" id="1"></div>');
-            game.defenseCheck++;
-        }
-        if (game.defenseCheck < 8){
-            let newDefenseKnight = new Knights(knightDefenseArray.length);
-            // $('[x = "0"][y = "2"]').empty();
-            $('[x = "2"][y = "2"]').append('<div class="home-knight" id="2"></div>');
-            knightDefenseArray.push(newDefenseKnight);
-            newDefenseKnight = $('<div class="home-knight" id="2"></div>');
-            game.defenseCheck++;
-        }
-        if (game.defenseCheck < 8){
-            let newDefenseKnight = new Knights(knightDefenseArray.length);
-            // $('[x = "1"][y = "2"]').empty();
-            $('[x = "2"][y = "3"]').append('<div class="home-knight" id="3"></div>');
-            knightDefenseArray.push(newDefenseKnight);
-            newDefenseKnight = $('<div class="home-knight" id="3"></div>');
-            game.defenseCheck++;
-        }
-        if (game.defenseCheck < 8){
-            let newDefenseKnight = new Knights(knightDefenseArray.length);
-            // $('[x = "0"][y = "2"]').empty();
-            $('[x = "2"][y = "4"]').append('<div class="home-knight" id="4"></div>');
-            knightDefenseArray.push(newDefenseKnight);
-            newDefenseKnight = $('<div class="home-knight" id="4"></div>');
-            game.defenseCheck++;
-        }
-        if (game.defenseCheck < 8){
-            let newDefenseKnight = new Knights(knightDefenseArray.length);
-            // $('[x = "1"][y = "2"]').empty();
-            $('[x = "2"][y = "5"]').append('<div class="home-knight" id="5"></div>');
-            knightDefenseArray.push(newDefenseKnight);
-            newDefenseKnight = $('<div class="home-knight" id="5"></div>');
-            game.defenseCheck++;
-        }
-        if (game.defenseCheck < 8){
-            let newDefenseKnight = new Knights(knightDefenseArray.length);
-            // $('[x = "0"][y = "2"]').empty();
-            $('[x = "1"][y = "5"]').append('<div class="home-knight" id="6"></div>');
-            knightDefenseArray.push(newDefenseKnight);
-            newDefenseKnight = $('<div class="home-knight" id="6"></div>');
-            game.defenseCheck++;
-        }
-        if (game.defenseCheck < 8){
-            let newDefenseKnight = new Knights(knightDefenseArray.length);
-            // $('[x = "1"][y = "2"]').empty();
-            $('[x = "0"][y = "5"]').append('<div class="home-knight" id="7"></div>');
-            knightDefenseArray.push(newDefenseKnight);
-            newDefenseKnight = $('<div class="home-knight" id="7"></div>');
-            game.defenseCheck++;
-        }
-    },
-}
-        // knightFactory.generateDefenseKnight every 30 seconds, 
-        // if there isn't one in that spot
-        // or just replace like a shift change?
 
-if (seconds % 30 === 0){
-    knightFactory.generateDefenseKnight();
+            let newDefenseKnight2 = new Knights(1);
+            $('[x = "1"][y = "2"]').append('<div class="home-knight" id="1"></div>');
+            knightDefenseArray.push(newDefenseKnight2);
+            newDefenseKnight2 = $('<div class="home-knight" id="1"></div>');
+            game.defenseCheck++;
+
+            let newDefenseKnight4 = new Knights(2);
+            $('[x = "2"][y = "3"]').append('<div class="home-knight" id="2"></div>');
+            knightDefenseArray.push(newDefenseKnight4);
+            newDefenseKnight4 = $('<div class="home-knight" id="2"></div>');
+            game.defenseCheck++;
+
+            let newDefenseKnight5 = new Knights(3);
+            $('[x = "2"][y = "4"]').append('<div class="home-knight" id="3"></div>');
+            knightDefenseArray.push(newDefenseKnight5);
+            newDefenseKnight5 = $('<div class="home-knight" id="3"></div>');
+            game.defenseCheck++;
+
+            let newDefenseKnight7 = new Knights(4);
+            $('[x = "1"][y = "5"]').append('<div class="home-knight" id="4"></div>');
+            knightDefenseArray.push(newDefenseKnight7);
+            newDefenseKnight7 = $('<div class="home-knight" id="4"></div>');
+            game.defenseCheck++;
+
+            let newDefenseKnight8 = new Knights(5);
+            $('[x = "0"][y = "5"]').append('<div class="home-knight" id="5"></div>');
+            knightDefenseArray.push(newDefenseKnight8);
+            newDefenseKnight8 = $('<div class="home-knight" id="5"></div>');
+            game.defenseCheck++;
+    }
 }
+
 
 class BattleUnit {
-    constructor(id, x, y){
+    constructor(id){
         this.hp = 150;
         this.damage = Math.floor(Math.random() * (25 - 10 + 1)) + 10;
         this.id = id;
-        this.x = x;
-        this.y = y;
+        // this.x = x;
+        // this.y = y;
     }
 }
 
@@ -179,7 +145,7 @@ const battleUnitFactory = {
     generateBattleUnit(){
         // new battle unit every 2 minutes, if one doesn't exist  seconds % 120 === 0
         if (game.battleUnitCheck < 1){
-            let newBattleUnit = new BattleUnit('battle', 0, 7);
+            let newBattleUnit = new BattleUnit('battle');
             battleUnitArray.push(newBattleUnit);
             $('[x ="0"][y="7"]').append('<div class="home-knight" id="battle"></div>');
             game.battleUnitCheck++;
@@ -188,7 +154,6 @@ const battleUnitFactory = {
         }
     },
 }
-battleUnitFactory.generateBattleUnit();
 
 const battleMove = () => {
     $('#battle').on('click', function(e){
@@ -232,12 +197,12 @@ class EnemyCity  {
 let enemyCity = new EnemyCity(500, [18, 19], [14, 15]);
 
 class Enemies {
-    constructor(id, x, y){
+    constructor(id){
         this.hp = 50;
         this.damage = Math.floor(Math.random() * (15 - 5 + 1)) + 5;
         this.id = id;
-        this.x = x;
-        this.y = y;
+        // this.x = x;
+        // this.y = y;
     }
 }
 
@@ -250,121 +215,97 @@ enemyAttackerArray = [];
 // to increase spawns as time goes on
 const enemyFactory = {
     generateEnemyDefense() {
-        if (game.enemyCityDefense < 8){
-            let newEnemy = new Enemies(enemyDefenseArray.length);
-            enemyDefenseArray.push(newEnemy);
-                $('[x = "19"][y = "13"]').append('<div class="enemy-defense" id="0"></div>')
-                newEnemy = $('<div class="enemy-defense" id="1"></div>')[ 0 ];
+            let newEnemy0 = new Enemies(0);
+            enemyDefenseArray.push(newEnemy0);
+                $('[x = "19"][y = "13"]').append('<div class="enemy-defense" id="0"></div>');
+                newEnemy0 = $('<div class="enemy-defense" id="0"></div>')[ 0 ];
                 game.enemyCityDefense++;
-        }
-        if (game.enemyCityDefense < 8){
-            let newEnemy = new Enemies(enemyDefenseArray.length);
-            enemyDefenseArray.push(newEnemy);
-                $('[x = "18"][y = "13"]').append('<div class="enemy-defense" id="1"></div>')
-                newEnemy = $('<div class="enemy-defense" id="1"></div>')[ 0 ];
+        
+            let newEnemy1 = new Enemies(1);
+            enemyDefenseArray.push(newEnemy1);
+                $('[x = "18"][y = "13"]').append('<div class="enemy-defense" id="1"></div>');
+                newEnemy1 = $('<div class="enemy-defense" id="1"></div>')[ 0 ];
                 game.enemyCityDefense++;
-        }
-        if (game.enemyCityDefense < 8){
-            let newEnemy = new Enemies(enemyDefenseArray.length);
-            enemyDefenseArray.push(newEnemy);
-                $('[x = "17"][y = "13"]').append('<div class="enemy-defense" id="2"></div>')
-                newEnemy = $('<div class="enemy-defense" id="2"></div>')[ 0 ];
+        
+            let newEnemy2 = new Enemies(3);
+            enemyDefenseArray.push(newEnemy2);
+                $('[x = "17"][y = "14"]').append('<div class="enemy-defense" id="3"></div>');
+                newEnemy2 = $('<div class="enemy-defense" id="3"></div>')[ 0 ];
                 game.enemyCityDefense++;
-        }
-        if (game.enemyCityDefense < 8){
-            let newEnemy = new Enemies(enemyDefenseArray.length);
-            enemyDefenseArray.push(newEnemy);
-                $('[x = "17"][y = "14"]').append('<div class="enemy-defense" id="3"></div>')
-                newEnemy = $('<div class="enemy-defense" id="3"></div>')[ 0 ];
+        
+            let newEnemy3 = new Enemies(4);
+            enemyDefenseArray.push(newEnemy3);
+                $('[x = "17"][y = "15"]').append('<div class="enemy-defense" id="4"></div>');
+                newEnemy3 = $('<div class="enemy-defense" id="4"></div>')[ 0 ];
                 game.enemyCityDefense++;
-        }
-        if (game.enemyCityDefense < 8){
-            let newEnemy = new Enemies(enemyDefenseArray.length);
-            enemyDefenseArray.push(newEnemy);
-                $('[x = "17"][y = "15"]').append('<div class="enemy-defense" id="4"></div>')
-                newEnemy = $('<div class="enemy-defense" id="4"></div>')[ 0 ];
+        
+            let newEnemy4 = new Enemies(5);
+            enemyDefenseArray.push(newEnemy4);
+                $('[x = "18"][y = "16"]').append('<div class="enemy-defense" id="5"></div>');
+                newEnemy4 = $('<div class="enemy-defense" id="5"></div>')[ 0 ];
                 game.enemyCityDefense++;
-        }
-        if (game.enemyCityDefense < 8){
-            let newEnemy = new Enemies(enemyDefenseArray.length);
-            enemyDefenseArray.push(newEnemy);
-                $('[x = "17"][y = "16"]').append('<div class="enemy-defense" id="5"></div>')
-                newEnemy = $('<div class="enemy-defense" id="5"></div>')[ 0 ];
+        
+            let newEnemy5 = new Enemies(7);
+            enemyDefenseArray.push(newEnemy5);
+                $('[x = "19"][y = "16"]').append('<div class="enemy-defense" id="7"></div>');
+                newEnemy5 = $('<div class="enemy-defense" id="7"></div>')[ 0 ];
                 game.enemyCityDefense++;
-        }
-        if (game.enemyCityDefense < 8){
-            let newEnemy = new Enemies(enemyDefenseArray.length);
-            enemyDefenseArray.push(newEnemy);
-                $('[x = "18"][y = "16"]').append('<div class="enemy-defense" id="6"></div>')
-                newEnemy = $('<div class="enemy-defense" id="6"></div>')[ 0 ];
-                game.enemyCityDefense++;
-        }
-        if (game.enemyCityDefense < 8){
-            let newEnemy = new Enemies(enemyDefenseArray.length);
-            enemyDefenseArray.push(newEnemy);
-                $('[x = "19"][y = "16"]').append('<div class="enemy-defense" id="7"></div>')
-                newEnemy = $('<div class="enemy-defense" id="7"></div>')[ 0 ];
-                game.enemyCityDefense++;
-        }
     },
-    generateEnemyAttacker(){
-    if (Math.random() < 0.3){
-        let newEnemy = new Enemies(enemyAttackerArray.length, 0, 1);
-        enemyAttackerArray.push(newEnemy);
-        // $('[x = "0"][y = "1"]').empty();
-        $('[x = "0"][y = "1"]').append(`<div class="enemy-attacker" id="0"></div>`);
-        newEnemy = $(`<div class="enemy-attacker" id="0"></div>`)[ 0 ];
-    }
-    if (Math.random() < 0.3){
-        let newEnemy = new Enemies(enemyAttackerArray.length, 0, 1);
-        enemyAttackerArray.push(newEnemy);
-        // $('[x = "1"][y = "1"]').empty();
-        $('[x = "1"][y = "1"]').append(`<div class="enemy-attacker" id="1"></div>`);
-        newEnemy = $(`<div class="enemy-attacker" id="1"></div>`)[ 0 ];
-    }
-    if (Math.random() < 0.3){
-        let newEnemy = new Enemies(enemyAttackerArray.length, 0, 1);
-        enemyAttackerArray.push(newEnemy);
-        // $('[x = "3"][y = "3"]').empty();
-        $('[x = "3"][y = "3"]').append(`<div class="enemy-attacker" id="2"></div>`);
-        newEnemy = $(`<div class="enemy-attacker" id="2"></div>`)[ 0 ];
-    }
-    if (Math.random() < 0.3){
-        let newEnemy = new Enemies(enemyAttackerArray.length, 0, 1);
-        enemyAttackerArray.push(newEnemy);
-        // $('[x = "3"][y = "4"]').empty();
-        $('[x = "3"][y = "4"]').append(`<div class="enemy-attacker" id="3"></div>`);
-        newEnemy = $(`<div class="enemy-attacker" id="3"></div>`)[ 0 ];
-    }
-    if (Math.random() < 0.3){
-        let newEnemy = new Enemies(enemyAttackerArray.length, 0, 1);
-        enemyAttackerArray.push(newEnemy);
-        // $('[x = "1"][y = "6"]').empty();
-        $('[x = "1"][y = "6"]').append(`<div class="enemy-attacker" id="4"></div>`);
-        newEnemy = $(`<div class="enemy-attacker" id="4"></div>`)[ 0 ];
-    }
-    if (Math.random() < 0.3){
-        let newEnemy = new Enemies(enemyAttackerArray.length, 0, 1);
-        enemyAttackerArray.push(newEnemy);
-        // $('[x = "0"][y = "6"]').empty();
-        $('[x = "0"][y = "6"]').append(`<div class="enemy-attacker" id="5"></div>`);
-        newEnemy = $(`<div class="enemy-attacker" id="5"></div>`)[ 0 ];
+    
+    generateEnemyAttacker() {
+        if (Math.random() < 0.3){
+            let newEnemy = new Enemies(0);
+            enemyAttackerArray.push(newEnemy);
+            // $('[x = "0"][y = "1"]').empty();
+            $('[x = "0"][y = "1"]').append(`<div class="enemy-attacker" id="0"></div>`);
+            newEnemy = $(`<div class="enemy-attacker" id="0"></div>`)[ 0 ];
+        }
+        if (Math.random() < 0.3){
+            let newEnemy = new Enemies(1);
+            enemyAttackerArray.push(newEnemy);
+            // $('[x = "1"][y = "1"]').empty();
+            $('[x = "1"][y = "1"]').append(`<div class="enemy-attacker" id="1"></div>`);
+            newEnemy = $(`<div class="enemy-attacker" id="1"></div>`)[ 0 ];
+        }
+        if (Math.random() < 0.3){
+            let newEnemy = new Enemies(2);
+            enemyAttackerArray.push(newEnemy);
+            // $('[x = "3"][y = "3"]').empty();
+            $('[x = "3"][y = "3"]').append(`<div class="enemy-attacker" id="2"></div>`);
+            newEnemy = $(`<div class="enemy-attacker" id="2"></div>`)[ 0 ];
+        }
+        if (Math.random() < 0.3){
+            let newEnemy = new Enemies(3);
+            enemyAttackerArray.push(newEnemy);
+            // $('[x = "3"][y = "4"]').empty();
+            $('[x = "3"][y = "4"]').append(`<div class="enemy-attacker" id="3"></div>`);
+            newEnemy = $(`<div class="enemy-attacker" id="3"></div>`)[ 0 ];
+        }
+        if (Math.random() < 0.3){
+            let newEnemy = new Enemies(4);
+            enemyAttackerArray.push(newEnemy);
+            // $('[x = "1"][y = "6"]').empty();
+            $('[x = "1"][y = "6"]').append(`<div class="enemy-attacker" id="4"></div>`);
+            newEnemy = $(`<div class="enemy-attacker" id="4"></div>`)[ 0 ];
+        }
+        if (Math.random() < 0.3){
+            let newEnemy = new Enemies(5);
+            enemyAttackerArray.push(newEnemy);
+            // $('[x = "0"][y = "6"]').empty();
+            $('[x = "0"][y = "6"]').append(`<div class="enemy-attacker" id="5"></div>`);
+            newEnemy = $(`<div class="enemy-attacker" id="5"></div>`)[ 0 ];
+        }
     }
     
 }
-}
-
-if (seconds % 30 === 0){
-    enemyFactory.generateEnemyDefense();
-}
-enemyFactory.generateEnemyAttacker();
 
 
+// enemies not attacking defense knights
 const enemyAttack = () =>{
-    if (seconds % 2 === 0) {
+    // if (seconds % 2 === 0) {
         for (let i = 0; i < enemyAttackerArray.length; i++){
             for (let x = 0; x < enemyAttackerArray.length; x++){
-                if (enemyAttackerArray[i] && knightDefenseArray[x]){
+                if (knightDefenseArray[x] && enemyAttackerArray[i]){
                     knightDefenseArray[x].hp = knightDefenseArray[x].hp - enemyAttackerArray[i].damage;
                     // if (knightDefenseArray[i].hp <= 0){
     
@@ -381,31 +322,34 @@ const enemyAttack = () =>{
                 }
             }
         }
-    }
+    // }
 }
-enemyAttack();
-enemyAttack();
-enemyAttack();
-enemyAttack();
-enemyAttack();
-enemyAttack();
-enemyAttack();
-enemyAttack();
-enemyAttack();
-enemyAttack();
-enemyAttack();
-enemyAttack();
+
 
 const knightDefenseAttack = () =>{
-    if (seconds % 2 === 0) {
-        for (let i = 0; i < knightDefenseArray.length; i++){
-            for (let x = 0; x < enemyAttackerArray.length; x++){
-                if (knightDefenseArray[i] && enemyAttackerArray[x]){
-                    enemyAttackerArray[x].hp = enemyAttackerArray[x].hp - knightDefenseArray[i].damage;
-                }
-            
+    for (let i = 0; i < knightDefenseArray.length; i++){
+        for (let x = 0; x < enemyAttackerArray.length; x++){
+            enemyAttackerArray[x].hp = enemyAttackerArray[x].hp - knightDefenseArray[i].damage;
+            if (enemyAttackerArray[0] && enemyAttackerArray[0].hp <= 0){
+                $('[x = "0"][y = "1"]').css('opacity', 0);
+            }
+            if (enemyAttackerArray[1] && enemyAttackerArray[1].hp <= 0){
+                $('[x = "1"][y = "1"]').css('opacity', 0);
+            }
+            if (enemyAttackerArray[2] && enemyAttackerArray[2].hp <= 0){
+                $('[x = "3"][y = "3"]').css('opacity', 0);
+            }
+            if (enemyAttackerArray[3] && enemyAttackerArray[3].hp <= 0){
+                $('[x = "3"][y = "4"]').css('opacity', 0);
+            }
+            if (enemyAttackerArray[4] && enemyAttackerArray[4].hp <= 0){
+                $('[x = "1"][y = "6"]').css('opacity', 0);
+            }
+            if (enemyAttackerArray[5] && enemyAttackerArray[5].hp <= 0){
+                $('[x = "0"][y = "6"]').css('opacity', 0);
             }
         }
+
     }
 }
 
@@ -449,13 +393,13 @@ const battleUnitAttack = () => {
     })
 
 }
-battleUnitAttack();
 
 const deathCheck = () => {
     if (enemyCity.defenses <= 0){
+        alert('YOU WIN!!!');
     }
     if (homeCity.defenses <= 0){
-        alert('YOU LOSE!!!')
+        alert('YOU LOSE!!!');
     }
     // if anyone hits 0 hp remove them from the map
 
@@ -466,13 +410,6 @@ const deathCheck = () => {
 
     //     }
     // }
-    const deathEnemy = $('.enemy-knight').attr('id');
-    for (let i = 0; i < enemyAttackerArray.length; i++){
-        if (deathEnemy == enemyAttackerArray[i].id && enemyAttackerArray[i].hp <= 0){
-            enemyAttackerArray.splice([i], 1);
-            $(enemyAttackerArray[i].id).remove();
-        }
-    }
 }
 deathCheck();
 
@@ -493,3 +430,29 @@ if (seconds % 1 === 0){
     $('.level').empty();
     $('body').append(`<div class="level">Level: ${game.level} </div>`);
 }
+
+const generator = () => {
+    // if (seconds % 30 === 0){
+        enemyFactory.generateEnemyAttacker();
+        enemyFactory.generateEnemyDefense(); 
+        battleUnitFactory.generateBattleUnit();
+        battleUnitAttack();
+        knightFactory.generateDefenseKnight();
+        knightDefenseAttack();
+        knightDefenseAttack();
+        knightDefenseAttack();
+ 
+    // }
+}
+generator();
+
+const attacks = () => {
+    if (seconds % 2 === 0) {
+        enemyAttack();
+        knightDefenseAttack()
+    }
+}
+
+        // knightFactory.generateDefenseKnight every 30 seconds, 
+        // if there isn't one in that spot
+        // or just replace like a shift change?
