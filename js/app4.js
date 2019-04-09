@@ -9,6 +9,15 @@ const game = {
     },
     makeHomeCity() {
         $('[x ="0"][y="3"]').append('<div class="home-city"></div>');
+        $('[x ="1"][y="3"]').append('<div class="home-city"></div>');
+        $('[x ="0"][y="4"]').append('<div class="home-city"></div>');
+        $('[x ="1"][y="4"]').append('<div class="home-city"></div>');
+    },
+    makeEnemyCity() {
+        $('[x ="18"][y="14"]').append('<div class="enemy-city"></div>');
+        $('[x ="19"][y="14"]').append('<div class="enemy-city"></div>')
+        $('[x ="18"][y="15"]').append('<div class="enemy-city"></div>')
+        $('[x ="19"][y="15"]').append('<div class="enemy-city"></div>')
     },
     battleUnitCheck: 0,
     defenseCheck: 0,
@@ -19,10 +28,9 @@ const game = {
 }
 game.makeGrid();
 game.makeHomeCity();
+game.makeEnemyCity();
 
-
-// Set up timer.
-    // set up in seconds
+// Set up timer
 let timePassing;
 let seconds = 0;
 
@@ -59,19 +67,6 @@ pauseGame();
     // should timer appear on screen?
     // As time increases, so do enemy hordes.   
 
-// Show Stats on screen
-// add to render function
-if (seconds % 1 === 0){
-    $('.battle-hp').empty();
-    $('body').append('<div class="battle-hp">Battle Unit  HP: 0</div>');
-    $('.battle-damage').empty();
-    $('body').append(`<div class="battle-damage">Battle Unit Damage: 0</div>`);
-    $('.lives').empty();
-    $('body').append(`<div class="lives">Lives: ${game.lives} </div>`);
-    $('.level').empty();
-    $('body').append(`<div class="level">Level: ${game.level} </div>`);
-}
-
 class HomeCity  {
     constructor(defenses, x, y){
         this.defenses = defenses;
@@ -99,8 +94,16 @@ const knightFactory = {
         // knightFactory.generateDefenseKnight every 30 seconds, if there isn't one in that spot
         if (game.defenseCheck < 8){
             let newDefenseKnight = new Knights(knightDefenseArray.length, 0, 2);
-            $('[x = "0"][y = "2"]').empty();
-            $('[x = "0"][y = "2"]').append('<div class="home-knight" id="1" occupied="true"></div>');
+            // $('[x = "0"][y = "2"]').empty();
+            $('[x = "0"][y = "2"]').append('<div class="home-knight" id="0"></div>');
+            knightDefenseArray.push(newDefenseKnight);
+            newDefenseKnight = $('<div class="home-knight" id="0"></div>');
+            game.defenseCheck++;
+        }
+        if (game.defenseCheck < 8){
+            let newDefenseKnight = new Knights(knightDefenseArray.length, 0, 2);
+            // $('[x = "1"][y = "2"]').empty();
+            $('[x = "1"][y = "2"]').append('<div class="home-knight" id="1"></div>');
             knightDefenseArray.push(newDefenseKnight);
             newDefenseKnight = $('<div class="home-knight" id="1"></div>');
             game.defenseCheck++;
@@ -167,15 +170,15 @@ const battleMove = () => {
 battleMove();
 
 // Enemies
-const makeEnemyCity = () => {
-    $('[x ="18"][y="14"]').append('<div class="enemy-city"></div>')
-}
-makeEnemyCity();
 
-const enemyCity = {
-    defenses: 500,
-    location: ["19,14", "19,15", "18,14", "18,15"], // not sure this is the way I want to save this
+class EnemyCity  {
+    constructor(defenses, x, y){
+        this.defenses = defenses;
+        this.x = [x];
+        this.y = [y];
+    }
 }
+let enemyCity = new EnemyCity(500, [18, 19], [14, 15]);
 
 class Enemies {
     constructor(id, x, y){
@@ -197,15 +200,15 @@ const enemyFactory = {
         if (game.enemyCityDefense < 8){
             let newEnemy = new Enemies(enemyDefenseArray.length);
             enemyDefenseArray.push(newEnemy);
-                $('[x = "19"][y = "13"]').append('<div class="enemy-knight" id="0"></div>')
-                newEnemy = $('<div class="enemy-knight" id="1"></div>')[ 0 ];
+                $('[x = "19"][y = "13"]').append('<div class="enemy-defense" id="0"></div>')
+                newEnemy = $('<div class="enemy-defense" id="1"></div>')[ 0 ];
                 game.enemyCityDefense++;
         }
         if (game.enemyCityDefense < 8){
             let newEnemy = new Enemies(enemyDefenseArray.length);
             enemyDefenseArray.push(newEnemy);
-                $('[x = "18"][y = "13"]').append('<div class="enemy-knight" id="1"></div>')
-                newEnemy = $('<div class="enemy-knight" id="1"></div>')[ 0 ];
+                $('[x = "18"][y = "13"]').append('<div class="enemy-defense" id="1"></div>')
+                newEnemy = $('<div class="enemy-defense" id="1"></div>')[ 0 ];
                 game.enemyCityDefense++;
         }
     },
@@ -214,10 +217,8 @@ const enemyFactory = {
         let newEnemy = new Enemies(enemyAttackerArray.length, 0, 1);
         enemyAttackerArray.push(newEnemy);
         $('[x = "0"][y = "1"]').empty();
-        $('[x = "0"][y = "1"]').append(`<div class="enemy-knight" id="e9"></div>`);
-        newEnemy = $(`<div class="enemy-knight" id="e9"></div>`)[ 0 ];
-        $('#e9').x = 0;
-        $('#e9').y = 1;
+        $('[x = "0"][y = "1"]').append(`<div class="enemy-attacker" id="0"></div>`);
+        newEnemy = $(`<div class="enemy-attacker" id="0"></div>`)[ 0 ];
     }
 }
 }
@@ -225,22 +226,37 @@ enemyFactory.generateEnemyDefense();
 enemyFactory.generateEnemyAttacker();
 
 
-enemyAttackCity = () =>{
+const enemyAttack = () =>{
     for (let i = 0; i < enemyAttackerArray.length; i++){
         for (let x = 0; x < enemyAttackerArray.length; x++){
             if (enemyAttackerArray[i] && knightDefenseArray[x]){
                 knightDefenseArray[x].hp = knightDefenseArray[x].hp - enemyAttackerArray[i].damage;
+                if (knightDefenseArray[i].hp <= 0){
+                    // $(`.game-square[x=${this.x}][y=${this.y+1}]`).removeClass('bat');                }
             } else {
                 homeCity.defenses = homeCity.defenses - enemyAttackerArray[i].damage;
+                if (homeCity.defenses <= 0){
+                    $('.home-city').remove();
+                    alert('YOU LOSE!!!')
+                }
             }
         }
     }
 }
+enemyAttack();
+enemyAttack();
+enemyAttack();
+enemyAttack();
+enemyAttack();
+enemyAttack();
+enemyAttack();
+enemyAttack();
+enemyAttack();
+enemyAttack();
+enemyAttack();
+enemyAttack();
 
-// if anyone hits 0 hp remove them from the map
-// if home city hits 0 defenses, you lose
-
-knightDefenseAttack = () =>{
+const knightDefenseAttack = () =>{
     for (let i = 0; i < knightDefenseArray.length; i++){
         for (let x = 0; x < enemyAttackerArray.length; x++){
             if (knightDefenseArray[i] && enemyAttackerArray[x]){
@@ -251,22 +267,81 @@ knightDefenseAttack = () =>{
     }
 }
 
-// all enemies hp are connected, hitting one takes hp from all
-// e.target == enemy, find id, remove hp from that index in the enemyDefenseArray
-
 // add city attack
-battleUnitAttack = () => {
-    $('.enemy-knight').on('click', function (e){
+const battleUnitAttack = () => {
+    $('.enemy-defense').on('click', function (e){
         const victimId = $(e.target).attr('id');
-        console.log(victimId);
+        console.log(victimId)
+
         for (let i = 0; i < enemyDefenseArray.length; i++){
-            // make this work
-            if (victimId == enemyDefenseArray[i].id)
-                console.log(enemyDefenseArray[0].hp);
+            if (victimId == enemyDefenseArray[i].id){
                 enemyDefenseArray[i].hp = enemyDefenseArray[i].hp - battleUnitArray[0].damage;      
+            } 
         }
     })
+    $('.enemy-attacker').on('click', function (e){
+        const victimId = $(e.target).attr('id');
+        console.log(victimId)
+
+        for (let i = 0; i < enemyAttackerArray.length; i++){
+            if (victimId == enemyAttackerArray[i].id){
+                enemyAttackerArray[i].hp = enemyAttackerArray[i].hp - battleUnitArray[0].damage;      
+            } 
+
+        }
+    })
+    $('.enemy-city').on('click', function (e){
+        const victimId = $(e.target).attr('id');
+        if (victimId == 'enemy-city'){
+            enemyCity.defenses = enemyCity.defenses - battleUnitArray[0].damage;
+            if (enemyCity.defenses <= 0){
+                $('.enemy-city').remove();
+                alert('YOU WIN!!!')
+            }
+        }
+    })
+
 }
 battleUnitAttack();
 
-console.log(battleUnitArray[0].damage)
+const deathCheck = () => {
+    if (enemyCity.defenses <= 0){
+    }
+    if (homeCity.defenses <= 0){
+        alert('YOU LOSE!!!')
+    }
+    // if anyone hits 0 hp remove them from the map
+    // if home city hits 0 defenses, you lose
+    // const deathHome = $('.home-knight').attr('id');
+    // for (let i = 0; i < knightDefenseAttack.length; i++){
+    //     if (knightDefenseArray[i].hp <= 0){
+    //         knightDefenseArray.splice([i], 1);
+
+    //     }
+    // }
+    const deathEnemy = $('.enemy-knight').attr('id');
+    for (let i = 0; i < enemyAttackerArray.length; i++){
+        if (deathEnemy == enemyAttackerArray[i].id && enemyAttackerArray[i].hp <= 0){
+            enemyAttackerArray.splice([i], 1);
+            $(enemyAttackerArray[i].id).remove();
+        }
+    }
+}
+deathCheck();
+
+const render = () => {
+
+}
+
+// Show Stats on screen
+// add to render function
+if (seconds % 1 === 0){
+    $('.battle-hp').empty();
+    $('body').append('<div class="battle-hp">Battle Unit  HP: 0</div>');
+    $('.battle-damage').empty();
+    $('body').append(`<div class="battle-damage">Battle Unit Damage: 0</div>`);
+    $('.lives').empty();
+    $('body').append(`<div class="lives">Lives: ${game.lives} </div>`);
+    $('.level').empty();
+    $('body').append(`<div class="level">Level: ${game.level} </div>`);
+}

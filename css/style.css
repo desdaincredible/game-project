@@ -12,8 +12,8 @@
 
 .home-city {
     background-color: blue;
-    width: 62px;
-    height: 72px;
+    width: 30px;
+    height: 35px;
 }
 
 .home-knight {
@@ -23,14 +23,20 @@
     position: absolute;
 }
 
-.enemy-city {
+#enemy-city {
     background-color: darkred;
-    width: 62px;
-    height: 72px;
+    width: 30px;
+    height: 35px;
     margin-top: -5px;
 }
 
-.enemy-knight {
+.enemy-attacker {
+    background-color: red;
+    width: 30px;
+    height: 30px;   
+}
+
+.enemy-defense {
     background-color: red;
     width: 30px;
     height: 30px;   
