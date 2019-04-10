@@ -1,43 +1,99 @@
+body {
+    /* background-image: url(../images/background.jpg); */
+    background-size: 100%;
+    font-family: 'Oswald', sans-serif;
+
+}
+
 .container {
-    width: 670px;
-    position: relative;
+    width: 1150px;
+    /* position: fixed; */
 }
 
 .grid-squares {
     border: 1px solid black;
     display: inline-block;
-    width: 30px;
-    height: 30px;
+    width: 55px;
+    height: 55px;
 }
 
 .home-city {
     background-color: blue;
-    width: 30px;
-    height: 35px;
+    width: 55px;
+    height: 60px;
 }
 
 .home-knight {
     background-color: deepskyblue;
-    width: 30px;
-    height: 30px;
+    width: 55px;
+    height: 55px;
     position: absolute;
 }
 
 .enemy-city {
     background-color: darkred;
-    width: 30px;
-    height: 35px;
+    width: 55px;
+    height: 60px;
     margin-top: -5px;
 }
 
 .enemy-attacker {
     background-color: red;
-    width: 30px;
-    height: 30px;   
+    width: 55px;
+    height: 55px;   
 }
 
 .enemy-defense {
     background-color: red;
-    width: 30px;
-    height: 30px;   
+    width: 55px;
+    height: 55px;   
+}
+
+.logo {
+    text-align: center;
+    padding-top: 100px;
+}
+
+.logo-img {
+    text-align: center;
+    width: 80%;
+}
+
+button {
+    width: 85px;
+    padding: 5px;
+    margin: 10px 10px 30px 0;
+    color: white;
+    background-color: #022f6d;
+    border: 1px solid white;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+
+}
+
+.start-button {
+    text-align: center;
+}
+
+.stats {
+    width: 50%;
+    display: inline;
+    color: white;
+    font-size: 26px;
+    line-height: 2em;
+    font-family: 'Oswald', sans-serif;
+
+    /* float: left; */
+}
+
+.pause-button {
+    width: 50%;
+    display: inline;
+    margin-bottom: 30px;
+    line-height: 1.5em;
+    font-family: 'Oswald', sans-serif;
+
+
+    /* float: left; */
 }
