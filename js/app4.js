@@ -252,7 +252,7 @@ const enemyFactory = {
             const randomXCoordinates = randomCoordinates.shift(); 
             const randomYCoordinates = randomCoordinates.pop();
 
-            let newEnemyAttacker = new Knights(enemyAttackerArray.length, randomXCoordinates, randomYCoordinates);
+            let newEnemyAttacker = new Enemies(enemyAttackerArray.length, randomXCoordinates, randomYCoordinates);
             $(`[x = "${newEnemyAttacker.x}"][y = "${newEnemyAttacker.y}"]`).append(`<div class="enemy-attacker" id="${newEnemyAttacker.id}"></div>`);
             enemyAttackerArray.push(newEnemyAttacker);
             game.defenseCheck++;
@@ -262,55 +262,30 @@ const enemyFactory = {
 }
 
 
-// enemies not attacking defense knights
-const enemyAttack = () =>{
+// if I did this better, I would loop through squares where an enemy is possible,
+// if enemy is present, the closest knight would fight the enemy
+const enemyAttackerAttack = () => {
     for (let i = 0; i < enemyAttackerArray.length; i++){
         for (let x = 0; x < knightDefenseArray.length; x++){
-            // if (knightDefenseArray[x].x === enemyAttackerArray[i].x){
-            //     console.log(knightDefenseArray[x].x)
+            if (enemyAttackerArray[i].id == knightDefenseArray[x].id){
                 knightDefenseArray[x].hp = knightDefenseArray[x].hp - enemyAttackerArray[i].damage;
-            // }
-            console.log(knightDefenseArray[x].hp)
-
+            }  
+            if (enemyAttackerArray[i].id == knightDefenseArray[x].id && knightDefenseArray[x].hp <= 0) {
+                homeCity.defenses = homeCity.defenses - enemyAttackerArray[i].damage;
+            }
         }
-        homeCity.defenses = homeCity.defenses - enemyAttackerArray[i].damage;
     }   
 }
 
-
-const knightDefenseAttack = () =>{
+const knightDefenseAttack = () => {
     for (let i = 0; i < knightDefenseArray.length; i++){
         for (let x = 0; x < enemyAttackerArray.length; x++){
-            enemyAttackerArray[x].hp = enemyAttackerArray[x].hp - knightDefenseArray[i].damage;
-            // if (enemyAttackerArray[0] && enemyAttackerArray[0].hp <= 0){
-            //     $('[x = "0"][y = "1"]').css('opacity', 0.5);
-            //     //$(`#${enemyAttackerArray[i].id}`).css
-            // }
-            // if (enemyAttackerArray[1] && enemyAttackerArray[1].hp <= 0){
-            //     $('[x = "1"][y = "1"]').css('opacity', 0.5);
-            // }
-            // if (enemyAttackerArray[2] && enemyAttackerArray[2].hp <= 0){
-            //     $('[x = "3"][y = "3"]').css('opacity', 0.5);
-            // }
-            // if (enemyAttackerArray[3] && enemyAttackerArray[3].hp <= 0){
-            //     $('[x = "3"][y = "4"]').css('opacity', 0.5);
-            // }
-            // if (enemyAttackerArray[4] && enemyAttackerArray[4].hp <= 0){
-            //     $('[x = "1"][y = "6"]').css('opacity', 0.5);
-            // }
-            // if (enemyAttackerArray[5] && enemyAttackerArray[5].hp <= 0){
-            //     $('[x = "0"][y = "6"]').css('opacity', 0.5);
-            // }
+            if (knightDefenseArray[i].id == enemyAttackerArray[x].id){
+                enemyAttackerArray[x].hp = enemyAttackerArray[x].hp - knightDefenseArray[i].damage;
+            }  
         }
-
-    }
+    }   
 }
-knightDefenseAttack();
-knightDefenseAttack();
-knightDefenseAttack();
-knightDefenseAttack();
-
-
 
 
 const battleUnitAttack = () => {
@@ -320,24 +295,9 @@ const battleUnitAttack = () => {
             for (let x = 0; x < battleUnitArray.length; x++){
                 if (victimId == enemyDefenseArray[i].id){
                     enemyDefenseArray[i].hp = enemyDefenseArray[i].hp - battleUnitArray[0].damage; 
-                    if (enemyDefenseArray[0] && enemyDefenseArray[0].hp <= 0){
-                        $('[x = "19"][y = "13"]').css('opacity', 0.5);
+                    if (enemyDefenseArray[i] && enemyDefenseArray[i].hp <= 0){
+                        $(`[x = "${enemyDefenseArray[i].x}"][y = "${enemyDefenseArray[i].y}"]`).css('opacity', 0.5);
                     }  
-                    if (enemyDefenseArray[1] && enemyDefenseArray[1].hp <= 0){
-                        $('[x = "18"][y = "13"]').css('opacity', 0.5);
-                    }  
-                    if (enemyDefenseArray[2] && enemyDefenseArray[2].hp <= 0){
-                        $('[x = "17"][y = "14"]').css('opacity', 0.5);
-                    }  
-                    if (enemyDefenseArray[3] && enemyDefenseArray[3].hp <= 0){
-                        $('[x = "17"][y = "15"]').css('opacity', 0.5);
-                    }  
-                    if (enemyDefenseArray[4] && enemyDefenseArray[4].hp <= 0){
-                        $('[x = "18"][y = "16"]').css('opacity', 0.5);
-                    }  
-                    if (enemyDefenseArray[5] && enemyDefenseArray[5].hp <= 0){
-                        $('[x = "19"][y = "16"]').css('opacity', 0.5);
-                    }     
                 } 
             }
         }
@@ -345,46 +305,33 @@ const battleUnitAttack = () => {
 
     $('.enemy-attacker').on('click', function (e){
         const victimId = $(e.target).attr('id');
-            for (let i = 0; i < enemyAttackerArray.length; i++){
-                for (let x = 0; x < battleUnitArray.length; x++){
-                    if (victimId == enemyAttackerArray[i].id){
-                        enemyAttackerArray[i].hp = enemyAttackerArray[i].hp - battleUnitArray[0].damage;
-                        if (enemyAttackerArray[0] && enemyAttackerArray[0].hp <= 0){
-                            $('[x = "0"][y = "1"]').css('opacity', 0.5);
-                        }
-                        if (enemyAttackerArray[1] && enemyAttackerArray[1].hp <= 0){
-                            $('[x = "1"][y = "1"]').css('opacity', 0.5);
-                        }
-                        if (enemyAttackerArray[2] && enemyAttackerArray[2].hp <= 0){
-                            $('[x = "3"][y = "3"]').css('opacity', 0.5);
-                        }
-                        if (enemyAttackerArray[3] && enemyAttackerArray[3].hp <= 0){
-                            $('[x = "3"][y = "4"]').css('opacity', 0.5);
-                        }
-                        if (enemyAttackerArray[4] && enemyAttackerArray[4].hp <= 0){
-                            $('[x = "1"][y = "6"]').css('opacity', 0.5);
-                        }
-                        if (enemyAttackerArray[5] && enemyAttackerArray[5].hp <= 0){
-                            $('[x = "0"][y = "6"]').css('opacity', 0.5);
-                        }     
-                    }
+        for (let i = 0; i < enemyAttackerArray.length; i++){
+            for (let x = 0; x < battleUnitArray.length; x++){
+                if (victimId == enemyAttackerArray[i].id){
+                    enemyAttackerArray[i].hp = enemyAttackerArray[i].hp - battleUnitArray[0].damage; 
+                    if (enemyAttackerArray[i] && enemyAttackerArray[i].hp <= 0){
+                        $(`[x = "${enemyAttackerArray[i].x}"][y = "${enemyAttackerArray[i].y}"]`).css('opacity', 0.5);
+                    }  
                 } 
-    
             }
+        }
     })
-    // $('.enemy-city').on('click', function (e){
-    //     const victimId = $(e.target).attr('id');
-    //     if (seconds % 2 === 0){
-    //         if (victimId == 'enemy-city'){
-    //             enemyCity.defenses = enemyCity.defenses - battleUnitArray[0].damage;
-    //             if (enemyCity.defenses <= 0){
-    //                 $('.enemy-city').remove();
-    //                 alert('YOU WIN!!!')
-    //             }
-    //         }
-    //     }
-
-    // })
+    $('.enemy-city').on('click', function (e){
+        const victimId = $(e.target).attr('class');
+        for (let i = 0; i < battleUnitArray.length; i++){
+                if (victimId == 'enemy-city'){
+                    enemyCity.defenses = enemyCity.defenses - battleUnitArray[i].damage;
+                    if (enemyCity.defenses <= 0){
+                        $(`.enemy-city`).css('opacity', 0.5);
+                    }  
+                } 
+        }            // if (victimId == 'enemy-city'){
+            //     enemyCity.defenses - battleUnitArray[0].damage;
+            // } 
+            // if (enemyAttackerArray[i] && enemyAttackerArray[i].hp <= 0){
+            //     $(`[x = "${enemyAttackerArray[i].x}"][y = "${enemyAttackerArray[i].y}"]`).css('opacity', 0.5);
+            // } 
+    })
 
 }
 
@@ -405,6 +352,29 @@ const deathCheck = () => {
     //     }
     // }
 }
+
+// enemy defense don't attack battle unit yet
+
+// const enemyDefenseAttack = () => {
+// // loop through array of coordinates surrounding castle
+// // check if any div class = 'battle'
+// // if yes, attack battle unit
+//     const possibleCoordinates = [[19, 12], [18, 12], [17, 13], [18, 14], [18, 15], [17, 16], [18, 17], [19, 17]];  
+//     for (let i = 0; i < possibleCoordinates.length; i++){
+//         for (let x = 0; x < battleUnitArray.length; x++){
+//             for (let m = 0; m < enemyDefenseArray.length; m++){
+//                 const xCoordinates = possibleCoordinates[i].shift(); 
+//                 const yCoordinates = possibleCoordinates[i].pop();  
+//                 if (`$([${xCoordinates}][${yCoordinates}])`.hasClass('battle')){
+//                     battleUnitArray[x].hp = battleUnitArray[x].hp - enemyDefenseArray[m].damage;
+//                 }
+//             }
+//         }
+
+//     }
+
+// }
+
 deathCheck();
 
 const render = () => {
@@ -428,11 +398,9 @@ if (seconds % 1 === 0){
 const generator = () => {
     // if (seconds % 30 === 0){
         enemyFactory.generateEnemyAttacker();
-        enemyAttack();
         enemyFactory.generateEnemyDefense(); 
         battleUnitFactory.generateBattleUnit();
         battleMove();
-        battleUnitAttack();
         knightFactory.generateDefenseKnight();
         // knightDefenseAttack()
 
@@ -440,6 +408,9 @@ const generator = () => {
     // }
 }
 generator();
+enemyAttackerAttack();
+knightDefenseAttack();
+
 
 const attacks = () => {
     if (seconds % 2 === 0) {
