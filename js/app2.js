@@ -466,7 +466,7 @@ const deathCheck = () => {
     if (homeCity.defenses <= 0){
         alert('YOU LOSE!!!')
     }
-    // if anyone hits 0 hp remove them from the map
+    // if anyone hits 0 hp remove them from the body
 
     // const deathHome = $('.home-knight').attr('id');
     // for (let i = 0; i < knightDefenseAttack.length; i++){

@@ -8,42 +8,29 @@ const game = {
         }
     },
     makeHomeCity() {
+        $('[x ="0"][y="3"]').append('<div class="home-city-image"></div>');
         $('[x ="0"][y="3"]').append('<div class="home-city"></div>');
         $('[x ="1"][y="3"]').append('<div class="home-city"></div>');
         $('[x ="0"][y="4"]').append('<div class="home-city"></div>');
         $('[x ="1"][y="4"]').append('<div class="home-city"></div>');
     },
     makeEnemyCity() {
+        $('[x ="18"][y="14"]').append('<div class="enemy-city-image"></div>');
         $('[x ="18"][y="14"]').append('<div class="enemy-city"></div>');
         $('[x ="19"][y="14"]').append('<div class="enemy-city"></div>')
         $('[x ="18"][y="15"]').append('<div class="enemy-city"></div>')
         $('[x ="19"][y="15"]').append('<div class="enemy-city"></div>')
     },
-    battleUnitCheck: 0,
-    defenseCheck: 0,
-    lives: 3,
-    level: 0,
-    enemyDefenseCheck: 0,
-    enemyAttackCheck: 0,
-
 }
+let level = 0;
 
-// Set up timer
 let timePassing;
 let seconds = 0;
 
 const secondsGoUp = () => {
     seconds++;
-    console.log(seconds);
 }
 secondsGoUp();
-
-// level ups
-const levelUp = () => {
-    if (seconds % 180 === 0){
-        game.level++;
-    }  
-}
 
 class HomeCity  {
     constructor(defenses, x, y){
@@ -56,8 +43,8 @@ let homeCity = new HomeCity(500, [0, 1], [3, 4]);
 
 class Knights {
     constructor(id, x, y){
-        this.hp = 50;
-        this.damage = Math.floor(Math.random() * (15 - 5 + 1)) + 5;
+        this.hp = Math.floor(Math.random() * (50 - 25 + 1)) + 50;
+        this.damage = Math.floor(Math.random() * (20 - 10 + 1)) + 10;
         this.id = id;
         this.x = x;
         this.y = y;
@@ -88,8 +75,8 @@ const knightFactory = {
 
 class BattleUnit {
     constructor(id, x, y){
-        this.hp = 150;
-        this.damage = Math.floor(Math.random() * (25 - 10 + 1)) + 10;
+        this.hp = Math.floor(Math.random() * (150 - 75 + 1)) + 75;
+        this.damage = Math.floor(Math.random() * (75 - 25 + 1)) + 25;
         this.id = id;
         this.x = x;
         this.y = y;
@@ -100,20 +87,12 @@ let battleUnitArray = [];
 
 const battleUnitFactory = {
     generateBattleUnit(){
-        // new battle unit every 2 minutes, if one doesn't exist  seconds % 120 === 0
-        // if (game.battleUnitCheck === 0){
             let newBattleUnit = new BattleUnit('battle', 0, 7);
             battleUnitArray.push(newBattleUnit);
             $('[x ="0"][y="7"]').append('<div class="home-knight" id="battle"></div>');
-            game.battleUnitCheck++;
-            $('.stats').append(`Battle Unit HP: ${newBattleUnit.hp}`)  
-            $('.stats').append(`Battle Unit Damage: ${newBattleUnit.damage}`);  
-        // }
     },
 }
-
-// how to keep track of coordinates of battle unit? Necessary?
-
+// Didn't make it so it doesn't move off screen
 const battleMove = () => {
     $('#battle').on('click', function(e){
         $(document).keydown(function(e){
@@ -121,32 +100,31 @@ const battleMove = () => {
                 direction = 'left';
                 battleUnitArray[0].x = battleUnitArray[0].x--;
                 $('#battle').finish().animate({
-                    left: '-=32'
+                    left: '-=62'
                 });
             } else if (e.keyCode === 38){
                 direction = 'up';
                 battleUnitArray[0].y = battleUnitArray[0].y--;
                 $('#battle').finish().animate({
-                    top: '-=36'
+                    top: '-=67'
                 });
             } else if (e.keyCode === 39){
                 direction = 'right';
                 battleUnitArray[0].x = battleUnitArray[0].x++;
                 $('#battle').finish().animate({
-                    left: '+=32'
+                    left: '+=62'
                 });
             } else if (e.keyCode === 40){
                 direction = 'down';
                 battleUnitArray[0].y = battleUnitArray[0].y++;
                 $('#battle').finish().animate({
-                    top: '+=36'
+                    top: '+=67'
                 }); 
             }               
     
         });
     });
 }
-battleMove();
 
 // Enemies
 
@@ -161,8 +139,8 @@ let enemyCity = new EnemyCity(500, [18, 19], [14, 15]);
 
 class Enemies {
     constructor(id, x, y){
-        this.hp = 50;
-        this.damage = Math.floor(Math.random() * (15 - 5 + 1)) + 5;
+        this.hp = Math.floor(Math.random() * (50 - 25 + 1)) + 25;
+        this.damage = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
         this.id = id;
         this.x = x;
         this.y = y;
@@ -172,15 +150,9 @@ class Enemies {
 enemyDefenseArray = [];
 enemyAttackerArray = [];
 
-// As time increases, so do enemy hordes. 
-// if (seconds % 20 === 0 Math.random() < 0.3 || seconds % someNumber ===0 && Math.random() < 0.4)
-// to increase spawns as time goes on
-
-// generate every 30 seconds, if there isn't one in that spot?
-
 const enemyFactory = {
     generateEnemyDefense() {
-        // if (game.enemyDefenseCheck < 6){
+        if (enemyDefenseArray.length < 7) {
             const coordinatesArray = [[19, 13], [18, 13], [17, 14], [17, 15], [18, 16], [19, 16]];
             for (let i = 0; i < coordinatesArray.length; i++){
                 const coordinates = coordinatesArray[i];
@@ -190,9 +162,8 @@ const enemyFactory = {
                 $(`[x = "${newDefenseEnemy.x}"][y = "${newDefenseEnemy.y}"]`).empty();
                 $(`[x = "${newDefenseEnemy.x}"][y = "${newDefenseEnemy.y}"]`).append(`<div class="enemy-defense" id="${newDefenseEnemy.id}"></div>`);
                 enemyDefenseArray.push(newDefenseEnemy);
-                game.enemyDefenseCheck++;
             }
-        // }
+        }
     },
 
     generateEnemyAttacker() {
@@ -207,7 +178,6 @@ const enemyFactory = {
                 $(`[x = "${newEnemyAttacker.x}"][y = "${newEnemyAttacker.y}"]`).empty();
                 $(`[x = "${newEnemyAttacker.x}"][y = "${newEnemyAttacker.y}"]`).append(`<div class="enemy-attacker" id="${newEnemyAttacker.id}"></div>`);
                 enemyAttackerArray.push(newEnemyAttacker);
-                game.defenseCheck++;
             }
         }
     }
@@ -227,7 +197,8 @@ const enemyAttackerAttack = () => {
                 homeCity.defenses = homeCity.defenses - enemyAttackerArray[i].damage;
             }
             if (knightDefenseArray[x].hp <= 0){
-                $(`[x = "${knightDefenseArray[x].x}"][y = "${knightDefenseArray[x].y}"]`).css('opacity', 0);
+                $(`[x = "${knightDefenseArray[x].x}"][y = "${knightDefenseArray[x].y}"]`).empty();
+                knightDefenseArray.splice(knightDefenseArray[x]);
             }
             if (homeCity.defenses <= 0){
                 $('.home-city').css('opacity', 0);
@@ -243,13 +214,26 @@ const knightDefenseAttack = () => {
                 enemyAttackerArray[x].hp = enemyAttackerArray[x].hp - knightDefenseArray[i].damage;
             }  
             if (enemyAttackerArray[x].hp <= 0){
-                $(`[x = "${enemyAttackerArray[x].x}"][y = "${enemyAttackerArray[x].y}"]`).css('opacity', 0);
-
+                $(`[x = "${enemyAttackerArray[x].x}"][y = "${enemyAttackerArray[x].y}"]`).empty();
+                enemyAttackerArray.splice(enemyAttackerArray[x]);
             }
         }
     }   
 }
 
+const enemyDefenseAttack = () => {
+    for (let i = 0; i < enemyDefenseArray.length; i++){
+        for (let x = 0; x < battleUnitArray.length; x++){
+            if (enemyDefenseArray[i].id == battleUnitArray[x].id){
+                battleUnitArray[x].hp = battleUnitArray[x].hp - enemyDefenseArray[i].damage;
+            }  
+            if (battleUnitArray[x].hp <= 0){
+                $(`[x = "${battleUnitArray[x].x}"][y = "${battleUnitArray[x].y}"]`).empty();
+                battleUnitArray.splice(battleUnitArray[x]);
+            }
+        }
+    }   
+}
 
 const battleUnitAttack = () => {
     $('.enemy-defense').on('click', function (e){
@@ -259,7 +243,8 @@ const battleUnitAttack = () => {
                 if (victimId == enemyDefenseArray[i].id){
                     enemyDefenseArray[i].hp = enemyDefenseArray[i].hp - battleUnitArray[0].damage; 
                     if (enemyDefenseArray[i] && enemyDefenseArray[i].hp <= 0){
-                        $(`[x = "${enemyDefenseArray[i].x}"][y = "${enemyDefenseArray[i].y}"]`).css('opacity', 0.5);
+                        $(`[x = "${enemyDefenseArray[i].x}"][y = "${enemyDefenseArray[i].y}"]`).empty();
+                        enemyDefenseArray.splice(enemyDefenseArray[x]);
                     }  
                 } 
             }
@@ -273,7 +258,8 @@ const battleUnitAttack = () => {
                 if (victimId == enemyAttackerArray[i].id){
                     enemyAttackerArray[i].hp = enemyAttackerArray[i].hp - battleUnitArray[0].damage; 
                     if (enemyAttackerArray[i] && enemyAttackerArray[i].hp <= 0){
-                        $(`[x = "${enemyAttackerArray[i].x}"][y = "${enemyAttackerArray[i].y}"]`).css('opacity', 0.5);
+                        $(`[x = "${enemyAttackerArray[i].x}"][y = "${enemyAttackerArray[i].y}"]`).empty();
+                        enemyAttackerArray.splice(enemyAttackerArray[x]);
                     }  
                 } 
             }
@@ -285,158 +271,134 @@ const battleUnitAttack = () => {
                 if (victimId == 'enemy-city'){
                     enemyCity.defenses = enemyCity.defenses - battleUnitArray[i].damage;
                     if (enemyCity.defenses <= 0){
-                        $(`.enemy-city`).css('opacity', 0.5);
+                        $(`.enemy-city`).css('opacity', 0);
                     }  
                 } 
-        }            // if (victimId == 'enemy-city'){
-            //     enemyCity.defenses - battleUnitArray[0].damage;
-            // } 
-            // if (enemyAttackerArray[i] && enemyAttackerArray[i].hp <= 0){
-            //     $(`[x = "${enemyAttackerArray[i].x}"][y = "${enemyAttackerArray[i].y}"]`).css('opacity', 0.5);
-            // } 
+        }            
     })
 
 }
 
-const deathCheck = () => {
-    if (enemyCity.defenses <= 0){
-        alert('YOU WIN!!!');
-    }
-    if (homeCity.defenses <= 0){
-        alert('YOU LOSE!!!');
-    }
+const playButtonInGame = () => {
+    $('body').prepend('<button id="start">PLAY</button>');
+        $('#start').click(function(){
+            clearInterval(timePassing)
+            timePassing = setInterval(secondsGoUp, 1000);
+        })
 }
-
-deathCheck();
-
-const generator = () => {
-    // if (seconds % 30 === 0){
-        enemyFactory.generateEnemyAttacker();
-        enemyFactory.generateEnemyDefense(); 
-        battleUnitFactory.generateBattleUnit();
-        battleMove();
-        knightFactory.generateDefenseKnight();
-    // }
-}
-
-const showOnScreen = () => {
-    $('body').prepend('<div class="stats"></div>');
-    $('.battle-hp').empty();
-    $('.stats').append('<div class="battle-hp">Battle Unit  HP: 0</div>');
-    $('.battle-damage').empty();
-    $('.stats').prepend(`<div class="battle-damage">Battle Unit Damage: 0</div>`);
-    $('.level').empty();
-    $('.stats').prepend(`<div class="level">Level: ${game.level} </div>`);
-    if (seconds % 120 === 0){
-        level++;
-        $('.level').text('Level: ' + level);
-    }
-}
-
-
-// fix and include?
-const instructionButton = () => {
-    $('.start-button').append('<button id="instructions">INSTRUCTIONS</button>');
-    $('.start-button').empty();
-    $('.start-button').append('Some stuff');
-
-}
-
-const render = () => {
-    $('body').empty();
-    $('body').css('background-image', 'url(images/background.jpg)');
-    game.makeGrid();
-    game.makeHomeCity();
-    game.makeEnemyCity();
-    generator();
-    pauseGame();
-    restartGame();
-    showOnScreen();
-}
-
-const attacks = () => {
-    // if (seconds % 2 === 0){
-    //     knightDefenseAttack();
-    //     console.log(enemyAttackerArray);
-    //     enemyAttackerAttack();
-    //     console.log(knightDefenseArray);
-    // }
-    for (let i = 0; i < 1000; i++){
-        setTimeout(knightDefenseAttack(), 2000);
-        setTimeout(enemyAttackerAttack(), 3000)
-    }
-}
-
-const startGame = () => {
-    $('body').append('<div class="start-button"></div>');
-    $('.start-button').append('<button id="start">PLAY</button>');
-    // sets up seconds
-    $('#start').click(function(){
-        timePassing = setInterval(secondsGoUp, 1000);
-        $('body').empty();
-        $('body').css('background-image', 'url(images/background.jpg)');
-        render();
-    })
-    }
-
-const unPauseGame = () => {
-    $('.pause-button').append('<button id="start">PLAY</button>');
-    // sets up seconds
-    $('#start').click(function(){
-        timePassing = setInterval(secondsGoUp, 1000);
-        $('body').empty();
-        $('body').css('background-image', 'url(images/background.jpg)');
-    })
-    }
-
-const restartGame = () => {
-    $('.pause-button').append('<button id="start">PLAY</button>');
-    // sets up seconds
-    $('#start').click(function(){
-        timePassing = setInterval(secondsGoUp, 1000);
-        render();
-    })
-    }
 
 const pauseGame = () => {
-    $('body').prepend('<div class="pause-button"></div>');
-    $('.pause-button').prepend('<button id="stop">PAUSE</button>');
-    //stops timer
+    $('body').prepend('<button id="stop">PAUSE</button>');
     $('#stop').click(function(){
         clearInterval(timePassing);
     })
 }
 
+const generator = () => {
+        enemyFactory.generateEnemyAttacker();
+        enemyFactory.generateEnemyDefense(); 
+        battleUnitFactory.generateBattleUnit();
+        battleMove();
+        knightFactory.generateDefenseKnight();
+}
+
+const levelUp = () => {
+        level++;
+        $('.level').text('Level: ' + level);
+}
+setInterval(levelUp, 60000)
+
+const showOnScreen = () => {
+    $('body').prepend('<div class="stats"></div>');
+    $('.level').empty();
+    $('.stats').prepend(`<div class="level">Level: ${level} </div>`);
+}
+
+const attacks = () => {
+        setInterval(knightDefenseAttack, 20000)
+        setInterval(enemyAttackerAttack, 20000)
+        setInterval(battleUnitAttack, 2000)
+        setInterval(enemyDefenseAttack, 1000)
+}
+
+const deathCheck = () => {
+    if (enemyCity.defenses <= 0){
+        clearInterval(timePassing)
+        $('body').empty();
+        $('body').css('background', 'black');
+        $('body').append('<img class="victory" src="images/victory.png">'); 
+        $('body').append('<div class="start-button"></div>');
+        $('.start-button').append('<button id="play-again">PLAY AGAIN</button>');
+        $('#play-again').click(function(){
+            // clearInterval(timePassing)
+            window.location.reload(true);
+            timePassing = setInterval(secondsGoUp, 1000);
+        })    
+    }
+    if (homeCity.defenses <= 0){
+        $('body').empty();
+        $('body').css('background', 'black');
+        $('body').append('<img class="game-over" src="images/game-over.png">'); 
+        $('body').append('<div class="start-button"></div>');
+        $('.start-button').append('<button id="play-again">PLAY AGAIN</button>');
+        $('#play-again').click(function(){
+            // clearInterval(timePassing)
+            window.location.reload(true);
+            timePassing = setInterval(secondsGoUp, 1000);  
+        })  
+    }
+}
+setInterval(deathCheck, 1000)
+
+const render = () => {
+    $('.logo').remove();
+    $('body').css('background-image', 'url(images/background.jpg)');
+    game.makeGrid();
+    game.makeHomeCity();
+    game.makeEnemyCity();
+    pauseGame();
+    playButtonInGame();
+    showOnScreen();
+    generator();
+    attacks();
+}
+
+const startGame = () => {
+    $('.logo').append('<div class="start-button"></div>');
+    $('.start-button').append('<button id="start">PLAY</button>');
+    // sets up seconds
+    $('#start').click(function(){
+        timePassing = setInterval(secondsGoUp, 1000);
+        render();
+    })
+    }
+
 const startUpPage = () => {
     $('body').empty();
-    $('body').css('background-color', '#022f6d');
+    $('body').css('background-color', 'black');
     $('body').append('<div class="logo"></div>');
     $('.logo').append('<img class="logo-img" src="images/warcraftish-logo.png">')
     // $('.logo').append('<h1>START GAME</h1>')
     startGame();
-
-
 }
 
-
+// not working
 const generatorCheck = () => {
-    const generator = () => {
-        if (seconds % 5 === 0 && enemyAttackerArray.length === 0){
+        if (enemyAttackerArray.length === 0){
             enemyFactory.generateEnemyAttacker();
         }
-        enemyFactory.generateEnemyDefense(); 
-        if (second % 30 === 0 && !battleUnitArray[0]){
+        if (!battleUnitArray[0]){
             battleUnitFactory.generateBattleUnit();
             battleMove();
         }
-        if (seconds % 30 === 0 && knightDefenseArray < 3){
+        if (knightDefenseArray.length === 0){
             knightFactory.generateDefenseKnight();
         }
-        if (seconds % 30 === 0 && enemyDefenseArray < 3){
+        if (enemyDefenseArray.length === 0){
             enemyFactory.generateEnemyDefense();
         }
-    }
 }
 
-render();
-attacks();
+setInterval(generatorCheck, 10000)
+
+startUpPage();
