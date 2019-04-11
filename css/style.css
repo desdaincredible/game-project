@@ -57,13 +57,9 @@ body {
 }
 
 .enemy-attacker {
-    /* background-image: url(../images/enemy.gif); */
+    background-image: url(../images/enemy.gif); 
     width: 60px;
     height: 60px;   
-}
-
-#enemy-left {
-    background-image: url(../images/enemy-left.gif); 
 }
 
 #enemy-bottom {
