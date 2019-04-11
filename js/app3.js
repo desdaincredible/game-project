@@ -58,18 +58,7 @@ pauseGame();
         // knightFactory.generateDefenseKnight every 30 seconds, if there isn't one in that spot
     // should timer appear on screen?
     // As time increases, so do enemy hordes.   
-
-// Show Stats on screen
-if (seconds % 1 === 0){
-    $('.battle-hp').empty();
-    $('body').append('<div class="battle-hp">Battle Unit  HP: 0</div>');
-    $('.lives').empty();
-    $('body').append(`<div class="lives">Lives: ${game.lives} </div>`);
-    $('.level').empty();
-    $('body').append(`<div class="level">Level: ${game.level} </div>`);
-    $('.clock').empty();
-    $('body').append(`<div class="clock">${seconds}</div>`);
-}
+     
 
 class HomeCity  {
     constructor(defenses, x, y){
@@ -170,8 +159,7 @@ const knightFactory = {
         if (game.battleUnitCheck < 1){
             let newBattleUnit = new Knights('battle');
             $('[x ="0"][y="7"]').append('<div class="home-knight" id="battle"></div>');
-            game.battleUnitCheck++;
-            $('.battle-hp').text(`Battle Unit HP: ${newBattleUnit.hp}`)  
+            game.battleUnitCheck++;  
             // this.knightsArray.push(newBattleUnit);      
         }
     },
@@ -249,6 +237,9 @@ attackCity(){
     // if near knight or home city, auto attack (city takes priority)
     homeCity.defenses - enemyFactory.enemyArray.damage;
 }
+attackCity();
+attackCity();
+attackCity();
 
 
 // attackCity(){
@@ -422,3 +413,208 @@ enemyFactory.generateEnemy();
     // is square occupied?
     // if yes, attack 
         // attack is target square's hp - attacker's damage
+
+
+/////////////////////////////
+const game = {
+    makeGrid() {
+        $('body').append('<div class="container"><div>')
+        for (let x = 0; x < 20; x++){
+            for (let y = 0; y < 20; y++){
+            $('.container').append(`<div class="grid-squares" x="${[x]}" y="${[y]}"></div>`)
+            }
+        }
+    },
+    makeHomeCity() {
+        $('[x ="0"][y="3"]').append('<div class="home-city"></div>');
+    },
+    battleUnitCheck: 0,
+    defenseCheck: 0,
+    lives: 3,
+    level: 0,
+    enemyCityDefense: 0,
+
+}
+game.makeGrid();
+game.makeHomeCity();
+
+
+// Set up timer.
+    // set up in seconds
+let timePassing;
+let seconds = 0;
+
+const secondsGoUp = () => {
+    seconds++;
+    console.log(seconds);
+}
+secondsGoUp();
+
+const startGame = () => {
+    $('body').append('<button id="start">PLAY</button>');
+    // sets up seconds
+    $('#start').click(function(){
+        timePassing = setInterval(secondsGoUp, 1000);
+    })
+    console.log(seconds);
+    }
+startGame();
+
+const pauseGame = () => {
+    $('body').append('<button id="stop">PAUSE</button>');
+    //stops timer
+    $('#stop').click(function(){
+        clearInterval(timePassing);
+    })
+}
+pauseGame();
+     
+class HomeCity  {
+    constructor(defenses, x, y){
+        this.defenses = defenses;
+        this.x = [x];
+        this.y = [y];
+    }
+}
+let homeCity = new HomeCity(500, [0, 1], [3, 4]);
+
+class Knights {
+    constructor(id, x, y){
+        this.hp = Math.floor(Math.random() * (100 - 25 + 1)) + 25;
+        this.damage = Math.floor(Math.random() * (25 - 15 + 1)) + 15;
+        this.id = id;
+        this.x = x;
+        this.y = y;
+    }
+    move(){
+
+    }
+
+    attack(){
+
+    }
+}
+
+knightsArray = [],
+
+// const knightFactory = {
+generateDefenseKnight = () => {
+        let newDefenseKnight = new Knights(0, 0, 2);
+        $('[x = "0"][y = "2"]').empty();
+        $('[x = "0"][y = "2"]').append('<div class="home-knight" id="d1"></div>');
+        knightsArray.push(newDefenseKnight);
+        newDefenseKnight = $('<div class="home-knight" id="d1"></div>');
+        game.defenseCheck++;
+}
+
+// generateBattleUnit(){
+//         let newBattleUnit = new Knights('battle');
+//         $('[x ="0"][y="7"]').append('<div class="home-knight" id="battle" ></div>');
+//         game.battleUnitCheck++;  
+//         // this.knightsArray.push(newBattleUnit);      
+// },
+// } 
+// knightFactory.generateBattleUnit();
+// knightFactory.generateDefenseKnight();
+
+const battleMove = () => {
+        $('#battle').on('click', function(e){
+            $(document).keydown(function(e){
+                if (e.keyCode === 37){ 
+                    direction = 'left';
+                    $('#battle').finish().animate({
+                        left: '-=32'
+                    });
+                } else if (e.keyCode === 38){
+                    direction = 'up';
+                    $('#battle').finish().animate({
+                        top: '-=36'
+                    });
+                } else if (e.keyCode === 39){
+                    direction = 'right';
+                    $('#battle').finish().animate({
+                        left: '+=32'
+                    });
+                } else if (e.keyCode === 40){
+                    direction = 'down';
+                    $('#battle').finish().animate({
+                        top: '+=36'
+                    }); 
+                }               
+        
+            });
+        });
+}
+battleMove();
+
+// Enemies
+const makeEnemyCity = () => {
+    $('[x ="18"][y="14"]').append('<div class="enemy-city"></div>')
+}
+makeEnemyCity();
+
+const enemyCity = {
+    defenses: 500,
+    location: ["19,14", "19,15", "18,14", "18,15"], // not sure this is the way I want to save this
+}
+
+class Enemies {
+    constructor(id, x, y){
+        this.hp = Math.floor(Math.random() * (100 - 25 + 1)) + 25;
+        this.damage = Math.floor(Math.random() * (15 - 5 + 1)) + 5;
+        this.id = id;
+        this.x = x;
+        this.y = y;
+    }
+}
+
+const enemyAttack = () => {
+    if ($(`.game-square[x=${this.x+1}][y=${this.y}]`).attr('.home-knight')) {
+        knightsArray[0].hp = knightsArray[0].hp--;
+    }
+}
+
+enemyArray = [];
+// const enemyFactory = {
+//     enemyArray: [],
+//     generateEnemyCityDefense() {
+//         let newEnemy = new Enemies(this.enemyArray.length);
+//         this.enemyArray.push(newEnemy);
+//             $('[x = "19"][y = "13"]').append('<div class="enemy-knight" id="e1"></div>')
+//             newEnemy = $('<div class="enemy-knight" id="[i]"></div>')[ 0 ];
+//             game.enemyCityDefense++;
+//     },
+    const generateEnemy = () => {
+        let newEnemy = new Enemies(0, 0, 1);
+        this.enemyArray.push(newEnemy);
+        $('[x = "0"][y = "1"]').empty();
+        $('[x = "0"][y = "1"]').append(`<div class="enemy-knight" id="e9"></div>`);
+        console.log(newEnemy.damage);
+    }
+// } 
+// enemyFactory.generateEnemyCityDefense();
+// enemyFactory.generateEnemy();
+
+
+const render = () => {
+    console.log(knightsArray);
+    generateDefenseKnight();
+    console.log(enemyArray);
+    generateEnemy();
+        console.log(knightsArray[0]);
+        enemyAttack();
+        console.log(knightsArray[0]);
+        enemyAttack();
+        console.log(knightsArray[0]);
+        enemyAttack();
+}
+render();
+
+// is square occupied?
+    // by person or city?
+
+// if person, attack 
+    // attack is target square's hp - attacker's damage
+// if city
+    // attack is city's defense = attacker's damage
+// render
