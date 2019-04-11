@@ -1,52 +1,71 @@
 body {
-    /* background-image: url(../images/background.jpg); */
-    background-size: 100%;
+    background-repeat: no-repeat;
+    position: relative;
     font-family: 'Oswald', sans-serif;
-
+    background-size: 125%;
+    background-position: center;
 }
 
 .container {
-    width: 1150px;
+    background-size: 100%;
+    width: 1300px;
     /* position: fixed; */
 }
 
 .grid-squares {
-    border: 1px solid black;
+    border: 1px solid rgba(0, 0, 0, 0);
     display: inline-block;
-    width: 55px;
-    height: 55px;
-}
-
-.home-city {
-    background-color: blue;
-    width: 55px;
+    width: 60px;
     height: 60px;
 }
 
+.home-city {
+    /* background-color: blue; */
+    width: 60px;
+    height: 65px;
+}
+
+.home-city-image {
+    background-image: url(../images/home-city.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 150px;
+    height: 150px;
+}
+
 .home-knight {
-    background-color: deepskyblue;
-    width: 55px;
-    height: 55px;
+    background-image: url(../images/knight.gif);
+    width: 60px;
+    height: 60px;
     position: absolute;
 }
 
 .enemy-city {
-    background-color: darkred;
-    width: 55px;
-    height: 60px;
-    margin-top: -5px;
+    /* background-color: darkred; */
+    width: 60px;
+    height: 65px;
+}
+
+.enemy-city-image {
+    background-image: url(../images/enemy-city.png);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    width: 150px;
+    height: 150px;
+    margin-bottom: -30px;
+    margin-left: -15px;
 }
 
 .enemy-attacker {
-    background-color: red;
-    width: 55px;
-    height: 55px;   
+    background-image: url(../images/enemy.gif);
+    width: 60px;
+    height: 60px;   
 }
 
 .enemy-defense {
-    background-color: red;
-    width: 55px;
-    height: 55px;   
+    background-image: url(../images/enemy.gif);
+    width: 60px;
+    height: 60px;   
 }
 
 .logo {
@@ -64,7 +83,7 @@ button {
     padding: 5px;
     margin: 10px 10px 30px 0;
     color: white;
-    background-color: #022f6d;
+    background-color: black;
     border: 1px solid white;
     font-size: 20px;
     text-align: center;
@@ -83,8 +102,6 @@ button {
     font-size: 26px;
     line-height: 2em;
     font-family: 'Oswald', sans-serif;
-
-    /* float: left; */
 }
 
 .pause-button {
@@ -93,7 +110,19 @@ button {
     margin-bottom: 30px;
     line-height: 1.5em;
     font-family: 'Oswald', sans-serif;
+}
 
+.game-over {
+    width: 100%;
+}
 
-    /* float: left; */
+.victory {
+    width: 100%;
+}
+
+#battle {
+    background-image: url(../images/battle-unit.gif);
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
 }

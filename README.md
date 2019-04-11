@@ -1,6 +1,6 @@
 # Game Project
 
-I want to build an original Warcraft style game where you build up a city's defenses, guard against attacking enemies and wander the map 
+I want to build an original Warcraft style game where you build up a city's defenses, guard against attacking enemies and wander the body 
 fighting enemies and gathering friends. It will be a basic grid layout where the player moves around the squares freely until they run into 
 an enemy horde. Then a battle ensues. Battle options will be pretty simple, archers shooting projectiles and knights fighting on the ground.
 Battles will start automatically upon entering a square occupied by an enemy. All attacks will have randomized accuracy and damage. Player 
@@ -25,6 +25,6 @@ will ally with you and add to your attack force. Game is won once all enemies ar
 * Fighters include knights that fight in close proximity and archers that can launch projectiles.
 * Enemy fighters also randomly wander or spawn anywhere on the board.
 * Create more enemy and ally cities.
-* Bigger map/side scroll
+* Bigger body/side scroll
 
 ![wireframe](images/game-project-wireframe.jpg)
