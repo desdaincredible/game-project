@@ -1,6 +1,6 @@
 # Game Project
 
-I want to build an original Warcraft style game where you build up a city's defenses, guard against attacking enemies and wander the body 
+I want to build an original Warcraft style game where you build up a city's defenses, guard against attacking enemies and wander the map 
 fighting enemies and gathering friends. It will be a basic grid layout where the player moves around the squares freely until they run into 
 an enemy horde. Then a battle ensues. Battle options will be pretty simple, archers shooting projectiles and knights fighting on the ground.
 Battles will start automatically upon entering a square occupied by an enemy. All attacks will have randomized accuracy and damage. Player 
